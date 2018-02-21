@@ -1,0 +1,56 @@
+app.controller("dashboardController", function ($scope) {
+
+  $scope.categories  = json(baseurl + "api/get/category");
+  $scope.category    = $scope.categories[0];
+  $scope.category_id = $scope.categories[0].category_id;
+  $scope.dateFilter  = moment().format("DD MMM YYYY");
+  $scope.planType    = "guest";
+
+  $scope.dashboardType = function () {
+    var index = 0;
+    $.each($scope.categories, function (i, each) {
+      if (each.category_id == $scope.category_id) index = i;
+    });
+    $scope.category = $scope.categories[index];
+
+    $scope.data     = json(baseurl + "api/get/dashboard", {type: $scope.category_id, date: $scope.dateFilter, planType: $scope.planType});
+
+    //$scope.total_vc = json(baseurl + "api/detail/total-room-status/VC", {category_id: $scope.category_id, date: $scope.dateFilter}).count;
+    //$scope.total_ea = json(baseurl + "api/detail/total-room-status/EA", {category_id: $scope.category_id, date: $scope.dateFilter}).count;
+    //$scope.total_od = json(baseurl + "api/detail/total-room-status/ED", {category_id: $scope.category_id, date: $scope.dateFilter}).count;
+    //$scope.total_ed = json(baseurl + "api/detail/total-room-status/OD", {category_id: $scope.category_id, date: $scope.dateFilter}).count;
+    //$scope.total_vd = json(baseurl + "api/detail/total-room-status/VD", {category_id: $scope.category_id, date: $scope.dateFilter}).count;
+  };
+
+  $scope.initHeader = function () {
+    $scope.header = [
+      moment($scope.dateFilter, "DD MMM YYYY").add(0, "day").format("DD/MM/YYYY"),
+      moment($scope.dateFilter, "DD MMM YYYY").add(1, "day").format("DD/MM/YYYY"),
+      moment($scope.dateFilter, "DD MMM YYYY").add(2, "day").format("DD/MM/YYYY"),
+      moment($scope.dateFilter, "DD MMM YYYY").add(3, "day").format("DD/MM/YYYY"),
+      moment($scope.dateFilter, "DD MMM YYYY").add(4, "day").format("DD/MM/YYYY"),
+      moment($scope.dateFilter, "DD MMM YYYY").add(5, "day").format("DD/MM/YYYY"),
+      moment($scope.dateFilter, "DD MMM YYYY").add(6, "day").format("DD/MM/YYYY"),
+    ];
+  };
+
+  $scope.toggleDate = function () {
+    $scope.data = json(baseurl + "api/get/dashboard", {type: $scope.category_id, date: $scope.dateFilter, planType: $scope.planType});
+    //$scope.total_vc = json(baseurl + "api/detail/total-room-status/VC", {category_id: $scope.category_id, date: $scope.dateFilter}).count;
+    //$scope.total_ea = json(baseurl + "api/detail/total-room-status/EA", {category_id: $scope.category_id, date: $scope.dateFilter}).count;
+    //$scope.total_od = json(baseurl + "api/detail/total-room-status/ED", {category_id: $scope.category_id, date: $scope.dateFilter}).count;
+    //$scope.total_ed = json(baseurl + "api/detail/total-room-status/OD", {category_id: $scope.category_id, date: $scope.dateFilter}).count;
+    //$scope.total_vd = json(baseurl + "api/detail/total-room-status/VD", {category_id: $scope.category_id, date: $scope.dateFilter}).count;
+  };
+
+  $scope.dashboardType();
+  $scope.initHeader();
+});
+
+$(document).ready(function () {
+  $("#date-filter").datepicker({
+    autoclose  : true,
+    format     : "dd M  yyyy",
+    orientation: "bottom left"
+  });
+});
