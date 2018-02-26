@@ -1,5 +1,5 @@
 
-<!-----><div ng-controller="listController">
+<!----><div ng-controller="listController">
           <div class="row">
             <div class="col-sm-12">
               <div class="pull-right m-t-15">
