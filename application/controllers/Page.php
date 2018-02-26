@@ -24,9 +24,9 @@
     public function view($type, $section) {
       if (active()) {
         display("container", array(
-         "content" => "{$section}/{$type}",
-         "section" => $type == "list" ? $section : "",
-         "script"  => array(
+          "content" => "{$section}/{$type}",
+          "section" => $type == "list" ? $section : "",
+          "script"  => array(
           "ext/js/{$section}.js",
           "ext/js/image-cropper.js",
          ),

@@ -1,5 +1,5 @@
 
-<!-----><div class="row">
+<!-- --><div class="row">
           <div class="col-sm-12">
             <div class="pull-right m-t-15">
               <a href="{{baseurl}}page/manage/group" class="btn btn-primary">New Group</a>
@@ -27,7 +27,7 @@
                   <tbody>
                     <tr ng-repeat="each in data">
                       <td><span ng-bind="each.reservation_date"></span></td>
-                      <td><a href="<?php echo base_url("page/detail/reservation/") ?>{{each.reservation_idreservation}}" ng-bind="each.reservation_id"></a></td>
+                      <td><a href="<?php echo base_url("page/detail/reservation/") ?>{{each.reservation_id}}" ng-bind="each.reservation_id"></a></td>
                       <td><span ng-bind="each.guest_name"></span></td>
                       <td><span ng-bind="each.guest_contact | phone"></span></td>
                       <td><span ng-bind="each.guest_email"></span></td>
