@@ -63,7 +63,7 @@
                     </thead>
                     <tbody>
                       <tr ng-repeat="each in data">
-                        <td align="center"><a href="{{baseurl+'page/detail/'+(each.reservation_status === 'Waiting'?'reservation':'registration')+'/'+each.reservation_id}}"><strong ng-bind="each.reservation_id"></strong></a></td>
+                        <td align="center"><a href="{{baseurl+'page/detail/'+(each.reservation_status === 'Waiting'?'reservation':'registration')+'/'+ each.reservation_id }}"><strong ng-bind="each.reservation_id"></strong></a></td>
                         <td align="center"><span ng-bind="each.reservation_datein"></span></td>
                         <td align="center"><span ng-bind="each.reservation_dateout"></span></td>
                         <td align="center"><span class="text-nowrap" ng-bind="each.guest_name"></span></td>
