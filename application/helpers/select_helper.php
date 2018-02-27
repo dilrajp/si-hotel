@@ -16,7 +16,7 @@
           if ($_POST["type"] != "all") get_instance()->db->where("category_id", $_POST["type"]);
 
           $query = "SELECT `reservation_id`, `guest_firstname`,  `marker_status`, `marker_modified` FROM `marker` JOIN `reservation` USING(`reservation_id`) JOIN `guest` USING(`reservation_id`)";
-          foreach (get_instance()->db->select("`room_id`, `room_number`")->order_by("room_number", "asc")->get("room")->result() as $each) {
+          foreach (get_instance()->db->select("`room_id`,`room_floor`, CONCAT(room_floor, iF(SUBSTR(room_number,1,3) = 'SUI', SUBSTR(room_number, 5, 2),  SUBSTR(room_number, 9, 2) )) as nama_kamar, `room_number`")->order_by("nama_kamar", "asc")->get("room")->result() as $each) {
             $date = new DateTime(date_format(date_create_from_format("d M Y", $_POST["date"]), "Y-m-d"));
 
             $condition = " WHERE `room_id`='{$each->room_id}' AND `marker_status` <> 'VC'";
@@ -24,6 +24,9 @@
 
             $temp = array(
              "room_number" => $each->room_number,
+             "room_floor" => $each->room_floor,
+             "nama_kamar" => $each->nama_kamar,             
+             "room_id" => $each->room_id,             
              "day_1"       => get_instance()->db->query($query . $condition . " AND `marker_date`='{$date->modify('+0 day')->format('Y-m-d')}' ORDER BY `marker_modified` DESC")->result(),
              "day_2"       => get_instance()->db->query($query . $condition . " AND `marker_date`='{$date->modify('+1 day')->format('Y-m-d')}' ORDER BY `marker_modified` DESC")->result(),
              "day_3"       => get_instance()->db->query($query . $condition . " AND `marker_date`='{$date->modify('+1 day')->format('Y-m-d')}' ORDER BY `marker_modified` DESC")->result(),

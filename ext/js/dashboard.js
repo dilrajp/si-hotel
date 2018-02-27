@@ -6,6 +6,16 @@ app.controller("dashboardController", function ($scope) {
   $scope.dateFilter  = moment().format("DD MMM YYYY");
   $scope.planType    = "guest";
 
+  var room = json(baseurl + "api/detail/room/" + hash());
+  $scope.room    = [];
+
+  $scope.detailRoom = function (room_id) {
+    $scope.room = json(baseurl + "api/detail/room-number/" + room_id);
+
+    $("#modal-detail").modal("show");
+  };
+
+
   $scope.dashboardType = function () {
     var index = 0;
     $.each($scope.categories, function (i, each) {

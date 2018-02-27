@@ -13,7 +13,7 @@
         &nbsp; : &nbsp;
 
         <select style="border:1px dashed gray; border-radius:4px; padding:4px;" ng-model="category_id" ng-change="dashboardType();">
-          <option ng-repeat="each in categories" value="{{each.category_id}}">{{each.category_name}}</option>
+          <option ng-repeat="each in categories" value="{{each.category_id}}" ng-bind="each.category_name"></option>
         </select>
 
         &nbsp; &nbsp;
@@ -47,7 +47,7 @@
           </thead>
           <tbody>
             <tr ng-repeat="each in data">
-              <td><strong ng-bind="each.room_number"></strong></td>
+              <td><a href="" ng-click="detailRoom(each.room_id);" onclick="return false;" ><strong ng-bind="each.nama_kamar"></strong></a></td>
               <td align="center">
                 <div ng-repeat="data in each.day_1" ng-if="(planType === 'status' || (planType === 'guest' && data !== 'VC'))"><a href="{{baseurl+'page/detail/reservation/'+each.reservation_id}}"><label class="label label-{{planType === 'guest' ? 'success': labelClass(data)}}" ng-bind="data" style="cursor:pointer;"></label></a></div>
               </td>
@@ -133,5 +133,7 @@
   <!---->
   <!--    </div>-->
   <!--  </div>-->
-
+<?php $this->load->view("dashboard/modal");?>
 </div>
+
+
