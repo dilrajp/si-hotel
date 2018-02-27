@@ -6,7 +6,7 @@
         Manage Room for this <strong>{{detail.category_name}}</strong>
       </div>
       <div class="modal-body">
-        <form class="reloadform" action="{{formurl}}" method="post">
+        <form class="reloadform" action="{{formurl}}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
           <input type="hidden" name="category_id" value="{{detail.category_id}}"/>
 
           <table class="table table-bordered">
@@ -14,6 +14,7 @@
               <td width="160">Room Number</td>
               <td>
                 <input type="text" name="room_number" class="form-control" placeholder="Room Number" required/>
+                <input type="hidden" name="room_pict"  />
               </td>
             </tr>
             <tr>
@@ -50,6 +51,12 @@
               <td>Description</td>
               <td>
                 <textarea name="room_description" class="form-control" placeholder="Description"></textarea>
+              </td>
+            </tr>
+            <tr>
+              <td>Gambar</td>
+              <td>
+                <input type="file" class="form-control" name="room_picture" required>
               </td>
             </tr>
             <tr>

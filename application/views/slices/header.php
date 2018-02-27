@@ -25,7 +25,7 @@
               <li class="nav-item dropdown notification-list">
                 <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light nav-user" data-toggle="dropdown" href="#" role="button"
                    aria-haspopup="false" aria-expanded="false">
-                  <img src="<?php echo base_url("ext/img/daichi.png") ?>" alt="user" class="img-circle">
+                  <img src="<?php echo base_url("ext/img/admin.jpg") ?>" alt="user" class="img-circle">
                 </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-arrow profile-dropdown " aria-labelledby="Preview">
                   <div class="dropdown-item noti-title">

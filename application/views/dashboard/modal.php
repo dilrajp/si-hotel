@@ -39,7 +39,7 @@
                       </tr>
                        <tr>
                         <td>Gambar</td>
-                        <td align="center"><p class="center"> <img src="<?php echo base_url("ext/img/")?>{{room.room_pict}}" width=30% height=30% style="text-align: center"></p></td>
+                        <td align="center"><p class="center"> <img src="<?php echo base_url("uploads/")?>{{room.room_pict}}" width=30% height=30% style="text-align: center"></p></td>
 
                       </tr>
                       <tr>

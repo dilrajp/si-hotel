@@ -198,6 +198,26 @@
     }
   }
 
+    if (!function_exists('uploadd')) {
+    function uploadd($file) {
+      $CI = get_instance();
+
+      $config['upload_path'] = 'uploads/';
+      $config['allowed_types'] = 'gif|jpg|png|jpeg';
+
+      $CI->load->library('upload', $config);
+      if (!get_instance()->upload->do_upload($file)){
+        // If the upload fails
+         return "xxx";
+     }else{
+        // Pass the full path and post data to the set_newstudent model
+         return get_instance()->upload->data('full_path');
+    }
+     
+    }
+  }
+
+
   if (!function_exists('uuid')) {
     function uuid() {
       $characters = '12345678abcdef';
