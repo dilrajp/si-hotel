@@ -1,5 +1,5 @@
 
-<!-----><div ng-controller="categoryController">
+<!-- --><div ng-controller="categoryController">
           <div class="row">
             <div class="col-sm-12">
               <h4 class="page-title">Manage Room</h4>
@@ -62,7 +62,7 @@
                           Yes
                         </label>
                         <label class="c-input c-radio">
-                          <input name="category_extrabed" type="radio" value="No"">
+                          <input name="category_extrabed" type="radio" value="No">
                           <span class="c-indicator"></span>
                           No
                         </label>

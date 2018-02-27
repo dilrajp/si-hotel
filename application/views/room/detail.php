@@ -1,10 +1,10 @@
 
-<!-----><div ng-controller="detailController">
+<!-- --><div ng-controller="detailController">
           <div class="row">
             <div class="col-sm-12">
               <div class="pull-right m-t-15">
                 <a href="{{baseurl}}page/manage/room/{{detail.category_id}}" class="btn btn-primary">Manage</a>
-                <button ng-click="manageRoom()" class="btn btn-primary">Add Room</button>
+                <button ng-click="addRoom()" class="btn btn-primary">Add Room</button>
               </div>
               <h4 class="page-title">Room Detail</h4>
             </div>
@@ -100,8 +100,8 @@
             </div>
           </div>
 
+          <?php $this->load->view("room/modal-add");?>
           <?php $this->load->view("room/modal-detail");?>
           <?php $this->load->view("room/modal-manage");?>
 
         </div>
-

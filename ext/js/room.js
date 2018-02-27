@@ -8,16 +8,14 @@ app.controller("detailController", function ($scope) {
   $scope.room    = [];
 
   $scope.detailRoom = function (room_id) {
+    $scope.room = [];
     $scope.room = json(baseurl + "api/detail/room-number/" + room_id);
-
     $("#modal-detail").modal("show");
   };
 
   $scope.manageRoom = function (room_id) {
 
     $scope.room = [];
-    $("#modal-manage form").attr("action", baseurl + "api/insert/room");
-    $("#modal-manage input[type='text']").val("");
 
     if (room_id) {
       $scope.room = json(baseurl + "api/detail/room-number/" + room_id);
@@ -25,7 +23,13 @@ app.controller("detailController", function ($scope) {
       $("#modal-manage form").attr("action", baseurl + "api/update/room/" + $scope.room["room_id"]);
     }
 
-    $("#modal-manage").modal('show');
+    $("#modal-manage").modal("show");
+  };
+
+  $scope.addRoom = function () {
+    $("#modal-add form").attr("action", baseurl + "api/insert/room");
+    $("#modal-add input[type='text']").val("");
+    $("#modal-add").modal("show");
   };
 });
 

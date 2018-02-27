@@ -1,5 +1,5 @@
 
-<!-----><div class="row">
+<!-- --><div class="row">
           <div class="col-sm-12">
             <div class="pull-right m-t-15">
               <a href="{{baseurl}}page/manage/room" class="btn btn-primary">New Room</a>
