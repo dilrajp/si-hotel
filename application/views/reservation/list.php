@@ -17,19 +17,19 @@
                   <span class="card-title">Reservation Type</span>
                   &nbsp;:
                   <label class="c-input c-radio">
-                    <input name="reservation_type" type="radio" value="Expected" ng-checked="isChecked('expected')" ng-click="reservationType('expected')">
+                    <input name="reservation_type" type="radio" value="Waiting" ng-checked="isChecked('waiting')" ng-click="reservationType('waiting')">
                     <span class="c-indicator"></span>
                     Expected
                   </label>
 
                   <label class="c-input c-radio">
-                    <input name="reservation_type" type="radio" value="In the House" ng-checked="isChecked('inthehouse')" ng-click="reservationType('inthehouse')">
+                    <input name="reservation_type" type="radio" value="Ongoing" ng-checked="isChecked('ongoing')" ng-click="reservationType('ongoing')">
                     <span class="c-indicator"></span>
                     In the house
                   </label>
 
                   <label class="c-input c-radio">
-                    <input name="reservation_type" type="radio" value="Check out" ng-checked="isChecked('checkout')" ng-click="reservationType('checkout')">
+                    <input name="reservation_type" type="radio" value="Finished" ng-checked="isChecked('finished')" ng-click="reservationType('finished')">
                     <span class="c-indicator"></span>
                     Check out
                   </label>
@@ -71,7 +71,12 @@
                           <label ng-if="!hasBalance(each.deposit, each.billing)" class="label label-primary">OK</label>
                           <span ng-if="hasBalance(each.deposit, each.billing)" class="text-nowrap" ng-bind="getBalance(each.deposit, each.billing) | rupiah"></span>
                         </td>
-                        <td align="center"><label class="label label-{{labelClass(each.reservation_status)}}" ng-bind="each.reservation_status"></label></td>
+                        <td align="center">
+                          <label class="label label-{{labelClass(each.reservation_status)}}" ng-if="(each.reservation_status === 'Waiting')">Expected</label>
+                          <label class="label label-{{labelClass(each.reservation_status)}}" ng-if="(each.reservation_status === 'Ongoing')">In the House</label>
+                          <label class="label label-{{labelClass(each.reservation_status)}}" ng-if="(each.reservation_status === 'Finished')">Check out</label>
+                          <label class="label label-{{labelClass(each.reservation_status)}}" ng-if="(each.reservation_status === 'Cancelled')">Cancelled</label>
+                        </td>
                         <td align="center"><span ng-bind="each.operator_username"></span></td>
                       </tr>
                     </tbody>

@@ -104,7 +104,7 @@
         case "reservation":
 
           $condition = "";
-          if ($_POST["type"] != "all") $condition = "WHERE `reservation_status`=" . get_instance()->db->escape(ucwords(isset($_POST["type"]) ? $_POST["type"] : "Expected"));
+          if ($_POST["type"] != "all") $condition = "WHERE `reservation_status`=" . get_instance()->db->escape(ucwords(isset($_POST["type"]) ? $_POST["type"] : "Waiting"));
           if (session("operator_role") == "Student") $condition .= " AND `operator_username`=" . get_instance()->db->escape(session("operator_username"));
 
           $query = "SELECT  `reservation_id`,
