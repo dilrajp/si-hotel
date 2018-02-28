@@ -144,7 +144,20 @@
           }
 
           $condition = array("room_id" => $identifier);
-
+           if (!empty($_FILES['room_picture']['name']))
+          { // setting konfigurasi upload
+                    $config['upload_path'] = './uploads/';
+                    $config['allowed_types'] = 'gif|jpg|png';
+                    // load library upload
+                    get_instance()->load->library('upload', $config);
+                    get_instance()->upload->do_upload('room_picture');
+          
+                    $_POST["room_pict"] = get_instance()->upload->data('file_name');
+                    //echo json_encode(   $_POST["room_pict"]);
+          }else{
+             $_POST["room_pict"] =  $_POST["room_pict"];
+            // echo json_encode(   $_POST["room_pict"]);
+          }
           break;
         case "travel-agent":
           $name_exist = get_instance()->db->get_where("travel_agent", array("travelagent_name" => $_POST["travelagent_name"]))->row_array();

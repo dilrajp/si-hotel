@@ -14,6 +14,7 @@
               <td width="160">Room Number</td>
               <td>
                 <input type="text" name="room_number" ng-model="room.room_number" class="form-control" placeholder="Room Number" required/>
+                <input type="hidden" name="room_pict" value="{{room.room_pict}}"  />
               </td>
             </tr>
             <tr>
@@ -50,6 +51,12 @@
               <td>Description</td>
               <td>
                 <textarea name="room_description" ng-model="room.room_description" class="form-control" placeholder="Description"></textarea>
+              </td>
+            </tr>
+            <tr>
+              <td>Gambar</td>
+              <td>
+                <input type="file" class="form-control" name="room_picture">
               </td>
             </tr>
             <tr>
