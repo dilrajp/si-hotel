@@ -17,21 +17,21 @@
                   <span class="card-title">Reservation Type</span>
                   &nbsp;:
                   <label class="c-input c-radio">
-                    <input name="reservation_type" type="radio" value="Waiting" ng-checked="isChecked('waiting')" ng-click="reservationType('waiting')">
+                    <input name="reservation_type" type="radio" value="Expected" ng-checked="isChecked('expected')" ng-click="reservationType('expected')">
                     <span class="c-indicator"></span>
-                    Waiting
+                    Expected
                   </label>
 
                   <label class="c-input c-radio">
-                    <input name="reservation_type" type="radio" value="Ongoing" ng-checked="isChecked('ongoing')" ng-click="reservationType('ongoing')">
+                    <input name="reservation_type" type="radio" value="In the House" ng-checked="isChecked('inthehouse')" ng-click="reservationType('inthehouse')">
                     <span class="c-indicator"></span>
-                    Ongoing
+                    In the house
                   </label>
 
                   <label class="c-input c-radio">
-                    <input name="reservation_type" type="radio" value="Finished" ng-checked="isChecked('finished')" ng-click="reservationType('finished')">
+                    <input name="reservation_type" type="radio" value="Check out" ng-checked="isChecked('checkout')" ng-click="reservationType('checkout')">
                     <span class="c-indicator"></span>
-                    Finished
+                    Check out
                   </label>
 
                   <label class="c-input c-radio">

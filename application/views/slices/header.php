@@ -58,7 +58,7 @@
               <li class="has-submenu">
                 <a href="#"><i class="zmdi zmdi-collection-text"></i><span> Reservation </span> </a>
                 <ul class="submenu">
-                  <li><a href="<?php echo base_url('page/reservation/waiting') ?>">Reservation</a></li>
+                  <li><a href="<?php echo base_url('page/reservation/expected') ?>">Reservation</a></li>
                   <li><a href="<?php echo base_url('page/registration') ?>">Registration</a></li>
                   <li><a href="<?php echo base_url('page/guest') ?>">Guest List</a></li>
 <?php if(session("operator_role") != 'Student'): ?>

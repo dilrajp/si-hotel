@@ -7,9 +7,9 @@ app.controller("dataController", function ($scope) {
   if (section !== "dashboard" && section !== "reservation") $scope.data = section === "" ? [] : json(baseurl + "api/get/" + section);
 
   $scope.labelClass = function (source) {
-    if (source === "Student" || source === "VC" || source === "Waiting" || source === "Yes") {
+    if (source === "Student" || source === "VC" || source === "Expected" || source === "Yes") {
       return "success";
-    } else if (source === "EA" || source === "OD" || source === "Ongoing" || source === "Operator") {
+    } else if (source === "EA" || source === "OD" || source === "Inthehouse" || source === "Operator") {
       return "primary";
     } else if (source === "Admin" || source === "Cancelled" || source === "ED" || source === "VD") {
       return "danger";
