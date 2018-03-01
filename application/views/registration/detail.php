@@ -3,7 +3,19 @@
     <h4 class="page-title">Invoice</h4>
   </div>
 </div>
-
+<style type="text/css">
+  
+.editOption{
+    width: 90%;
+    height: 26px;
+    position: relative;
+    top: -29px;
+    background: #E0F5FF;;
+    border: 0;
+    padding-left: 5px;
+}
+</style>
+<script language="JavaScript"  src="<?php echo base_url('assets/js/jquery-1.11.1.min.js')?>"></script>
 <div class="row" ng-controller="detailController">
   <div class="col-xs-12">
     <div class="card-box">
@@ -370,11 +382,32 @@
               </tr>
               <tr>
                 <td style="vertical-align: middle;">Note</td>
-                <td><textarea name="registration_note" class="form-control text-capitalize" placeholder="Desciption of the transaction, e.g: Additional dinner..." required></textarea></td>
+                <td>
+                  <!-- <textarea name="registration_note" class="form-control text-capitalize" placeholder="Desciption of the transaction, e.g: Additional dinner..." required></textarea> -->
+                   <div id="billdesc">
+                      <select id="test" name="registration_note"" class="form-control" required>
+                        <option class="non" value="Room Service" >Room Service</option>     
+                        <option class="non" value="Coffee Shop">Coffee Shop</option>     
+                        <option class="non" value="Drugstore">Drugstore</option>     
+                        <option class="non" value="Business Center">Business Center</option> 
+                        <option class="non" value="Lost and Damage">Lost and Damage</option> 
+                        <option class="non" value="Movie">Movie</option> 
+                        <option class="non" value="Mini Bar">Mini Bar</option> 
+                        <option class="editable" value="Restaurant">Restaurant</option> 
+                      </select>
+                      <input class="editOption" style="display:none;" placeholder="Text"></input>
+                  </div>
+                </td>
               </tr>
               <tr>
                 <td style="vertical-align: middle;">Amount</td>
                 <td><input type="number" name="registration_amount" class="form-control" placeholder="Transaction Amount" value="0" required oninput="validatePrice(this);"/></td>
+              </tr>
+              <tr>
+                <td style="vertical-align: middle;">Tanggal</td>
+                <td>
+                  <input type="text" id="date-from" name="reservation_datein" class="form-control" required  ng-readonly="true">
+                </td>
               </tr>
             </table>
 
@@ -392,3 +425,35 @@
   </div>
 
 </div>
+<script type="text/javascript">
+  $(document).ready(function(){
+    var date = new Date();
+    date.setDate(date.getDate());
+    $('#datetimepicker').datetimepicker('setStartDate', date);
+    $('#datetimepicker').datetimepicker('autoclose', 1);
+    $('#datetimepicker').datetimepicker('todayBtn', 1);
+  });
+  
+var initialText = $('.editable').val();
+$('.editOption').val(initialText);
+
+$('#test').change(function(){
+var selected = $('option:selected', this).attr('class');
+var optionText = $('.editable').text();
+
+if(selected == "editable"){
+  $('.editOption').show();
+  
+  $('.editOption').keyup(function(){
+      var editText = $('.editOption').val();
+      $('.editable').val(editText);
+      $('.editable').html(editText);
+  });
+
+}else{
+  $('.editOption').hide();
+}
+});
+
+</script>
+

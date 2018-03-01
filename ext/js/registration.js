@@ -51,4 +51,6 @@ app.controller("detailController", function ($scope) {
   $scope.parseInt = function (source) {
     return parseInt(source, 10);
   };
+
+  
 });
