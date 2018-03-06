@@ -72,7 +72,6 @@
             return false;
           }
 
-//          $_POST["operator_photo"] = upload($_FILES["operator_photo"], "operator-");
           $_POST["operator_role"] = !get_instance()->db->get("operator")->row() ? "Admin" : $_POST["operator_role"];
 
           unset($_POST["image_param"]);
@@ -82,7 +81,7 @@
            "registration_id"     => uuid(),
            "registration_note"   => $_POST["registration_note"],
            "registration_amount" => $_POST["registration_amount"],
-           "registration_date"   => timestamp(true),
+           "registration_date"   => date('Y-m-d H:i:s', strtotime($_POST["registration_date"])),
            "reservation_id"      => $_POST["reservation_id"],
           );
 
@@ -91,7 +90,7 @@
           break;
         case "reservation":
           $reservation_id = $_POST["reservation_id"];
-//
+
           if (get_instance()->db->get_where("reservation", array("reservation_id" => $reservation_id))->row()) {
             response("warning", "Reservation already added");
 
@@ -228,11 +227,13 @@
           break;
       }
 
+      if($section != 'registration'){
+        $_POST[ str_replace("_", "", $section) . "_date" ] = timestamp(true);  
+      }
+
       $section = str_replace("-", "_", $section);
       if ($section == "group") $section = "company";
-
-      $_POST[ str_replace("_", "", $section) . "_date" ] = timestamp(true);
-
+      
       return get_instance()->db->insert($section, parse_data());
     }
   }

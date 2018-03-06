@@ -15,6 +15,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('ext/css/plugin/jquery.Jcrop.min.css') ?>"/>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('ext/css/plugin/select2.min.css') ?>"/>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('ext/css/custom.css') ?>"/>
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/js/tanggal/bootstrap-datetimepicker.min.css'); ?>" charset="UTF-8">
     
 
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/style.css') ?>"/>

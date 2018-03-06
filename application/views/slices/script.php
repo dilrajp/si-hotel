@@ -27,6 +27,7 @@
     <script src="<?php echo base_url('ext/js/commons-angular.js') ?>"></script>
     <script src="<?php echo base_url('ext/js/commons-jquery.js') ?>"></script>
 
+    <script src="<?php echo base_url('assets/js/tanggal/bootstrap-datetimepicker.js') ?>"></script>
     <script src="<?php echo base_url('ext/js/plugin/moment.min.js') ?>"></script>
     <script src="<?php echo base_url('ext/js/plugin/bootstrap-datepicker.min.js') ?>"></script>
     <script src="<?php echo base_url('ext/js/plugin/jquery.Jcrop.min.js') ?>"></script>

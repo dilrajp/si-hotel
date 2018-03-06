@@ -293,7 +293,7 @@
                 <!--Print-->
                 <a href="javascript:window.print()" class="btn btn-dark waves-effect waves-light"><i class="fa fa-print"></i></a>
                 <!--Add Deposit-->
-                <a ng-if="detail.reservation_status === 'Ongoing'" href="" class="btn btn-success" ng-click="addDeposit(detail.reservation_id);" onclick="return false;"><i class="fa fa-plus"></i> Deposit</a>
+                <a ng-if="detail.reservation_status === 'Ongoing'" href="" class="btn btn-success" ng-click="addDeposit(detail.reservation_id);" onclick="return false;"><i class="fa fa-plus"></i> Credit</a>
                 <!--Add Transaction-->
                 <a ng-if="detail.reservation_status === 'Ongoing'" href="" class="btn btn-warning" ng-click="addTransaction(detail.reservation_id);" onclick="return false;"><i class="fa fa-plus"></i> Transaction</a>
               </td>
@@ -388,11 +388,10 @@
                 <td align="right"><strong ng-bind="billing_amount | rupiah"></strong></td>
               </tr>
               <tr>
-                <td style="vertical-align: middle;">Note</td>
+                <td style="vertical-align: middle;">Description</td>
                 <td>
-                  <!-- <textarea name="registration_note" class="form-control text-capitalize" placeholder="Desciption of the transaction, e.g: Additional dinner..." required></textarea> -->
-                   <div id="billdesc">
-                      <select id="test" name="registration_note"" class="form-control" required>
+                   <div id="billdesc" style="height: 35px;">
+                      <select id="test" name="registration_note" class="form-control" required>
                         <option class="non" value="Room Service" >Room Service</option>     
                         <option class="non" value="Coffee Shop">Coffee Shop</option>     
                         <option class="non" value="Drugstore">Drugstore</option>     
@@ -402,7 +401,7 @@
                         <option class="non" value="Mini Bar">Mini Bar</option> 
                         <option class="editable" value="Restaurant">Restaurant</option> 
                       </select>
-                      <input class="editOption" style="display:none;" placeholder="Text"></input>
+                      <input class="editOption" style="display:none; margin-left: 5px;" placeholder="Text"></input>
                   </div>
                 </td>
               </tr>
@@ -413,7 +412,7 @@
               <tr>
                 <td style="vertical-align: middle;">Tanggal</td>
                 <td>
-                  <input type="text" id="date-from" name="reservation_datein" class="form-control" required  ng-readonly="true">
+                  <input type="text" id="datetimepicker" name="registration_date" class="form-control input-append date form_datetime" data-date-format="dd MM yyyy hh:ii:00" required readonly>
                 </td>
               </tr>
             </table>
@@ -434,33 +433,37 @@
 </div>
 <script type="text/javascript">
   $(document).ready(function(){
-    var date = new Date();
-    date.setDate(date.getDate());
-    $('#datetimepicker').datetimepicker('setStartDate', date);
-    $('#datetimepicker').datetimepicker('autoclose', 1);
-    $('#datetimepicker').datetimepicker('todayBtn', 1);
+    $('#datetimepicker').datetimepicker({
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 0,
+        forceParse: 0
+    });
   });
   
-var initialText = $('.editable').val();
-$('.editOption').val(initialText);
+  var initialText = $('.editable').val();
+  $('.editOption').val(initialText);
 
-$('#test').change(function(){
-var selected = $('option:selected', this).attr('class');
-var optionText = $('.editable').text();
+  $('#test').change(function(){
+    var selected = $('option:selected', this).attr('class');
+    var optionText = $('.editable').text();
 
-if(selected == "editable"){
-  $('.editOption').show();
-  
-  $('.editOption').keyup(function(){
-      var editText = $('.editOption').val();
-      $('.editable').val(editText);
-      $('.editable').html(editText);
+    if(selected == "editable"){
+      $('.editOption').show();
+      
+      $('.editOption').keyup(function(){
+          var editText = $('.editOption').val();
+          $('.editable').val(editText);
+          $('.editable').html(editText);
+      });
+
+    }else{
+      $('.editOption').hide();
+    }
   });
-
-}else{
-  $('.editOption').hide();
-}
-});
 
 </script>
 
