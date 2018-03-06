@@ -98,13 +98,27 @@
           ")->result();
 
           $result->deposit_list = get_instance()->db->query("
-            (SELECT `deposit_date`      AS `date`, DATE_FORMAT(`deposit_date`, '%d %M %Y (%H:%i)')      AS `formatted_date`, 'Added Deposit'                   AS `note`, `deposit_amount` AS `amount` FROM `deposit`
+            (SELECT `deposit_date`      AS `date`, DATE_FORMAT(`deposit_date`, '%d %M %Y (%H:%i)') AS `formatted_date`, 'Added Deposit' AS `note`, `deposit_amount` AS `amount` FROM `deposit`
             WHERE `reservation_id`={$reservation_id})
             UNION ALL
             (SELECT `registration_date` AS `date`, DATE_FORMAT(`registration_date`, '%d %M %Y (%H:%i)') AS `formatted_date`, `registration_note`  AS `note`, `registration_amount` AS `amount` FROM `registration`
             WHERE `reservation_id`={$reservation_id})
             ORDER BY `date` ASC
           ")->result();
+
+          $jumlah = array();
+          $total = 0;
+
+          foreach ($result->deposit_list as $value) {
+            if ($value->note == 'Added Deposit') {
+              $total = $total + $value->amount;
+            } else {
+              $total = $total - $value->amount;
+            }
+            $jumlah[] = $total;
+          }
+
+          $result->balance = $jumlah;
           break;
         case "reservation":
           $result = get_instance()->db->select("

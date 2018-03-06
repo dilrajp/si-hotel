@@ -145,23 +145,30 @@
         <!--Table-->
         <div class="row">
 
-          <div class="col-xs-6">
+          <div class="col-xs-12">
             <div class="table-responsive">
-              <table class="table m-t-30">
+              <table class="table m-t-30" ng-init="total = 0">
                 <thead class="bg-faded">
                   <tr>
                     <th>#</th>
                     <th>Date</th>
-                    <th>Note</th>
-                    <th>Amount</th>
+                    <th>Time</th>
+                    <th>Description</th>
+                    <th>Debit</th>
+                    <th>Credit</th>
+                    <th>Balance</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr ng-repeat="each in deposit">
-                    <td><span ng-bind="$index+1"></span></td>
-                    <td><span ng-bind="each.formatted_date"></span></td>
+                    <td><span ng-bind="$index+1">{{each}}</span></td>
+                    <td><span ng-bind="each.formatted_date.slice(0, each.formatted_date.length - 7)"></span></td>
+                    <td><span ng-bind="each.formatted_date.substr(each.formatted_date.length - 6, 5)"></span></td>
                     <td><label class="label label-{{each.note === 'Added Deposit' ? 'success':'warning'}}" ng-bind="each.note"></label></td>
-                    <td align="right"><span ng-bind="each.amount | rupiah"></span></td>
+                    <td><span ng-if="each.note !== 'Added Deposit'" ng-bind="each.amount | rupiah"></td>
+                    <td><span ng-if="each.note === 'Added Deposit'" ng-bind="each.amount | rupiah"></span></td>
+                    <td align="left">{{balance[$index] >= 0 ? "("+(balance[$index] | rupiah)+")" : (balance[$index]*(-1) | rupiah)}}</td>
+                    </td>
                   </tr>
                 </tbody>
               </table>
