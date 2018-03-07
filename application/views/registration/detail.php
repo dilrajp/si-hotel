@@ -176,10 +176,10 @@
                     <td><span ng-bind="$index+1">{{each}}</span></td>
                     <td><span ng-bind="each.formatted_date.slice(0, each.formatted_date.length - 7)"></span></td>
                     <td><span ng-bind="each.formatted_date.substr(each.formatted_date.length - 6, 5)"></span></td>
-                    <td><label class="label label-{{each.note === 'Added Deposit' ? 'success':'warning'}}" ng-bind="each.note"></label></td>
-                    <td><span ng-if="each.note !== 'Added Deposit'" ng-bind="each.amount | rupiah"></td>
-                    <td><span ng-if="each.note === 'Added Deposit'" ng-bind="each.amount | rupiah"></span></td>
-                    <td align="left">{{balance[$index] >= 0 ? "("+(balance[$index] | rupiah)+")" : (balance[$index]*(-1) | rupiah)}}</td>
+                    <td><label class="label label-{{each.note === 'Added Deposit' || each.note.substr(0,11) === 'Correction-' ? 'success':'warning'}}" ng-bind="each.note.substr(0,11) === 'Correction-' ? each.note.substr(11) : each.note"></label></td>
+                    <td><span ng-if="each.note !== 'Added Deposit' && each.note.substr(0,11) !== 'Correction-'" ng-bind="each.amount | rupiah"></td>
+                    <td><span ng-if="each.note === 'Added Deposit' || each.note.substr(0,11) === 'Correction-'" ng-bind="each.amount | rupiah"></span></td>
+                    <td align="left"><span ng-bind="balance[$index] >= 0 ? '('+(balance[$index] | rupiah)+')' : (balance[$index]*(-1) | rupiah)"></span></td>
                     </td>
                   </tr>
                 </tbody>
@@ -296,6 +296,8 @@
                 <a ng-if="detail.reservation_status === 'Ongoing'" href="" class="btn btn-success" ng-click="addDeposit(detail.reservation_id);" onclick="return false;"><i class="fa fa-plus"></i> Credit</a>
                 <!--Add Transaction-->
                 <a ng-if="detail.reservation_status === 'Ongoing'" href="" class="btn btn-warning" ng-click="addTransaction(detail.reservation_id);" onclick="return false;"><i class="fa fa-plus"></i> Transaction</a>
+                <!-- add correction -->
+                <a ng-if="detail.reservation_status === 'Ongoing'" href="" class="btn btn-danger" ng-click="addCorrection(detail.reservation_id);" onclick="return false;"><i class="fa fa-edit"></i> Correction</a>
               </td>
               <td align="right" width="30%">
                 <a ng-if="detail.reservation_status === 'Ongoing'" href="#" class="btn btn-primary waves-effect waves-light" ng-click="checkOut()">Check Out</a>
@@ -362,6 +364,42 @@
 
             <div class="form-group">
               <input type="submit" class="btn btn-sm btn-primary" value="Add Deposit"/>
+              <input type="button" class="btn btn-sm btn-warning" value="Cancel" data-dismiss="modal"/>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+   <div id="modal-correction" class="modal fade" role="dialog" style="display: none;">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header text-lg-center" style="background: rgb(100, 176, 242); color:white;">
+          Add Correction for Reservation<br/> <strong>'{{detail.reservation_id}}'</strong><br/>
+        </div>
+        <div class="modal-body">
+          <form class="reloadform" action="{{deposit_url}}" method="post">
+
+            <input type="hidden" name="reservation_id" value="{{detail.reservation_id}}"/>
+
+            <table class="table">
+              <tr>
+                <td style="vertical-align: middle;">Name</td>
+                <td align="right"><textarea name="deposit_name" class="form-control text-capitalize" placeholder="Desciption of the Correction. . . . " required></textarea></td>
+              </tr>
+              <tr>
+                <td style="vertical-align: middle;">Amount</td>
+                <td><input type="number" name="deposit_amount" class="form-control" placeholder="Deposit Amount" value="0" required/></td>
+              </tr>
+            </table>
+
+            <hr/>
+
+            <div class="form-group">
+              <input type="submit" class="btn btn-sm btn-primary" value="Add "/>
               <input type="button" class="btn btn-sm btn-warning" value="Cancel" data-dismiss="modal"/>
             </div>
 

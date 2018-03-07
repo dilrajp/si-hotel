@@ -48,7 +48,8 @@
            "deposit_amount" => $_POST["deposit_amount"],
            "deposit_date"   => timestamp(true),
            "reservation_id" => $_POST["reservation_id"],
-          );
+           "deposit_name"   => "Correction-".$_POST['deposit_name']
+           );
 
           if ($_POST["deposit_amount"] == 0) return false;
           break;
