@@ -66,4 +66,78 @@
       $this->db->where("`reservation_id` <>", "''", false)->delete("reservation");
       redirect(base_url());
     }
+
+    function isWeekend($date) {
+    $weekDay = date('w', strtotime($date));
+    return ($weekDay == 0 || $weekDay == 6);
+    }
+    public function hargakamar(){
+      $grup = $this->input->post('grup');
+      //$id_room = $this->input->post('rum_id');
+      //$id_cat = $this->input->post('cat_id');
+      //$tanggal = isWeekend($this->input->post('tgl'));
+      $weekDay = date('w', strtotime(substr($this->input->post('registration_date'), 0, 10)));
+
+
+      $result = $this->input->post('data_kamar');
+      $result_explode = explode('|', $result);
+      // echo "Model: ". $result_explode[0]."<br />";
+      //echo "Colour: ". $result_explode[1]."<br />"
+      $id_cat = $result_explode[1];
+      $id_room = $result_explode[0];
+
+      if($grup == 'FIT'){
+        if($weekDay == 0 || $weekDay == 6 ){
+        $data['harga'] = $this->db->query("SELECT price_fitweekend as Harga
+                                  FROM price
+                                  JOIN room on (room.category_id = price.category_id)
+                                  WHERE room.category_id = '$id_cat' and room.room_id = '$id_room'  
+                                  ORDER BY `price`.`price_date` DESC
+                                  LIMIT 1")->row();
+       }else{
+       $data['harga'] = $this->db->query("SELECT price_fitweekday as Harga
+                                  FROM price
+                                  JOIN room on (room.category_id = price.category_id)
+                                  WHERE room.category_id = '$id_cat' and room.room_id = '$id_room'  
+                                  ORDER BY `price`.`price_date` DESC
+                                  LIMIT 1")->row();
+       }
+      }else if($grup == 'Group') {
+
+        if($weekDay == 0 || $weekDay == 6){
+      $data['harga'] =  $this->db->query("SELECT price_groupweekend as Harga
+                                  FROM price
+                                  JOIN room on (room.category_id = price.category_id)
+                                  WHERE room.category_id = '$id_cat' and room.room_id = '$id_room'  
+                                  ORDER BY `price`.`price_date` DESC
+                                  LIMIT 1")->row();
+       }else{
+       $data['harga'] =  $this->db->query("SELECT price_groupweekday as Harga
+                                  FROM price
+                                  JOIN room on (room.category_id = price.category_id)
+                                  WHERE room.category_id = '$id_cat' and room.room_id = '$id_room'  
+                                  ORDER BY `price`.`price_date` DESC
+                                  LIMIT 1")->row();
+       }
+      }
+      $data['aa'] = "aa";
+      $data['view'] = "Rp.".number_format((int)$data['harga']->Harga,2,".",",");
+      echo json_encode($data);
+    }
+
+    public function charge_kamar(){
+      
+      $data = array(
+           "registration_id"     => uuid(),
+           "registration_note"   => "Room*",
+           "registration_amount" => $this->input->post('room_charge'),
+           "registration_date"   => date('Y-m-d H:i:s', strtotime($this->input->post('tgl'))),
+           "reservation_id"      => $this->input->post('reservation_id'),
+          );
+      $this->db->insert('registration',$data);
+      
+      redirect('page/detail/registration/'.$this->input->post('reservation_id'));
+    }
+
+   
   }
