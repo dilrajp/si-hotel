@@ -4,8 +4,7 @@
   </div>
 </div>
 <style type="text/css">
-  
-.editOption{
+  .editOption{
     width: 90%;
     height: 26px;
     position: relative;
@@ -13,7 +12,7 @@
     background: #E0F5FF;;
     border: 0;
     padding-left: 5px;
-}
+  }
 </style>
 <script language="JavaScript"  src="<?php echo base_url('assets/js/jquery-1.11.1.min.js')?>"></script>
 <div class="row" ng-controller="detailController">
@@ -143,7 +142,7 @@
               <tr>
                 <td><strong>Date In</strong></td>
                 <td align="center" width="24">:</td>
-                <td><span ng-bind="detail.reservation_datein"></span></td>
+                <td><span id="datein" ng-bind="detail.reservation_datein"></span></td>
               </tr>
               <tr>
                 <td><strong>Date Out</strong></td>
@@ -480,6 +479,9 @@
         minView: 0,
         forceParse: 0
     });
+
+    //$('#datetimepicker').datetimepicker('setStartDate', new Date());
+
   });
   
   var initialText = $('.editable').val();
@@ -504,4 +506,3 @@
   });
 
 </script>
-
