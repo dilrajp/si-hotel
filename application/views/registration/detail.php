@@ -1,6 +1,32 @@
 <div class="row">
   <div class="col-sm-12">
-    <h4 class="page-title">Invoice</h4>
+    <h4 class="page-title">Invoice
+<?php 
+function isWeekend($date) {
+    $weekDay = date('w', strtotime($date));
+    return ($weekDay == 0 || $weekDay == 6);
+}
+
+$tgl = 
+$tgl = substr('2018-03-18 15:01:20', 0, 10);
+//echo isWeekend($tgl);
+if($tgl == 1 ){
+  echo "xxx";
+}
+
+ $result = "8b758f5c-b4db-d32a-3443-d8ea6bf1774f|861658ed-e812-2cf5-31b2-cba82ab2f271";
+            $result_explode = explode('|', $result);
+           // echo "Model: ". $result_explode[0]."<br />";
+            //echo "Colour: ". $result_explode[1]."<br />"
+
+/*$data['asd'] = $this->db->query("SELECT price_fitweekend as 'asd'
+                                  FROM price
+                                  JOIN room on (room.category_id = price.category_id)
+                                  WHERE room.category_id = '861658ed-e812-2cf5-31b2-cba82ab2f271' and room.room_id = '8b758f5c-b4db-d32a-3443-d8ea6bf1774f'  
+                                  ORDER BY `price`.`price_date` DESC
+                                  LIMIT 1")->row();
+echo $data['asd']->asd;*/
+ ?></h4>
   </div>
 </div>
 <style type="text/css">
@@ -14,6 +40,7 @@
     padding-left: 5px;
   }
 </style>
+
 <script language="JavaScript"  src="<?php echo base_url('assets/js/jquery-1.11.1.min.js')?>"></script>
 <div class="row" ng-controller="detailController">
   <div class="col-xs-12">
@@ -186,7 +213,7 @@
             </div>
           </div>
 
-          <div class="col-xs-6">
+      <!--     <div class="col-xs-6">
             <div class="table-responsive">
               <table class="table m-t-30">
                 <thead class="bg-faded">
@@ -214,7 +241,7 @@
                 </tfoot>
               </table>
             </div>
-          </div>
+          </div> -->
 
         </div>
 
@@ -297,6 +324,7 @@
                 <a ng-if="detail.reservation_status === 'Ongoing'" href="" class="btn btn-warning" ng-click="addTransaction(detail.reservation_id);" onclick="return false;"><i class="fa fa-plus"></i> Transaction</a>
                 <!-- add correction -->
                 <a ng-if="detail.reservation_status === 'Ongoing'" href="" class="btn btn-danger" ng-click="addCorrection(detail.reservation_id);" onclick="return false;"><i class="fa fa-edit"></i> Correction</a>
+                 <a ng-if="detail.reservation_status === 'Ongoing'" href="" class="btn btn-success" ng-click="chargeRoom(detail.reservation_id);" onclick="return false;"><i class="fa fa-money"></i> Room </a>
               </td>
               <td align="right" width="30%">
                 <a ng-if="detail.reservation_status === 'Ongoing'" href="#" class="btn btn-primary waves-effect waves-light" ng-click="checkOut()">Check Out</a>
@@ -467,7 +495,64 @@
     </div>
   </div>
 
+
+    <div id="modal-room" class="modal fade" role="dialog" style="display: none;">
+      <div class="modal-dialog modal-md">
+        <div class="modal-content">
+          <div class="modal-header text-lg-center" style="background: rgb(100, 176, 242); color:white;">
+            Room Charge<br/> <strong>'{{detail.reservation_id}}'</strong><br/>
+          </div>
+          <div class="modal-body">
+            <form class="reloadform" action="{{transaction_url}}" method="post" id="charge-kamar">
+
+              <input type="hidden" name="reservation_id" value="{{detail.reservation_id}}"/>
+              <input type="hidden" name="registration_note" value="Room*"/>
+
+              <table class="table">
+                <tr>
+                  <td style="vertical-align: middle;">Room</td>
+                  <td >
+                    <select  name="data_kamar" class="form-control" required>
+                      <option ng-repeat="each in jml_kamar" value="{{each.room_id}}|{{each.category_id}}"> <span>{{each.nama_kamar}}</option>   
+                    </select>
+                   
+                  </td>
+                </tr>
+                <tr ng-repeat="each in detail.detail|limitTo : 1">
+                  <input type="hidden" name="grup" value="{{detail.guest_type}}">
+                </tr>
+                <tr>
+                <td style="vertical-align: middle;">Tanggal
+                 
+               </td>
+                <td>
+                  <input type="text" id="tanggal" name="registration_date" class="form-control input-append date form_datetime" data-date-format="yyyy-mm-dd hh:ii:00" name="tanggal" required readonly>
+                </td>
+                </tr>
+                <tr>
+                  <td style="vertical-align: middle;">Amount</td>
+                  <td><input type="text" id="view_harga" class="form-control"  readonly required/>
+                      <input type="hidden" id="room_charge" name="registration_amount" class="form-control"  readonly required/>
+                  </td>
+                </tr>
+              </table>
+
+              <hr/>
+
+              <div class="form-group">
+                <input type="submit" class="btn btn-sm btn-primary" value="Add "/>
+                <input type="button" class="btn btn-sm btn-warning" value="Cancel" data-dismiss="modal"/>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
 </div>
+
+
 <script type="text/javascript">
   $(document).ready(function(){
     $('#datetimepicker').datetimepicker({
@@ -480,9 +565,38 @@
         forceParse: 0
     });
 
-    //$('#datetimepicker').datetimepicker('setStartDate', new Date());
+     $('#tanggal').datetimepicker({
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 0,
+        forceParse: 0
+    });
+
+    $('#tanggal')
+    .datetimepicker()
+    .on('hide', function(ev){
+       //console.log("asd");
+       $.ajax({  
+            url   : '<?php echo base_url()?>Api/hargakamar',  
+            data: $("#charge-kamar").serialize(),
+            type: "POST",  
+            dataType: "json",
+          success: function(data){
+              console.log("ngintip-ngintip nih");
+              
+              $( "#view_harga" ).attr('value',data.view );
+              $( "#room_charge" ).attr('value',data.harga.Harga );
+          }  
+        });
+
+    });
 
   });
+
+   
   
   var initialText = $('.editable').val();
   $('.editOption').val(initialText);

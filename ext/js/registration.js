@@ -29,6 +29,18 @@ app.controller("detailController", function ($scope) {
     $("#modal-correction").modal('show');
   };
 
+
+  $scope.chargeRoom = function (reservation_id) {
+    var reservation = json(baseurl + "api/detail/reservation-for-deposit/" + reservation_id);
+    $scope.jml_kamar = json(baseurl + "api/detail/room-charge/" + reservation_id);
+
+    $scope.reservation_id = reservation_id;
+    $scope.deposit_amount = reservation.amount;
+
+    $("#modal-room").modal('show');
+  };
+
+
   $scope.addTransaction = function (reservation_id) {
     var reservation = json(baseurl + "api/detail/reservation-for-registration/" + reservation_id);
 

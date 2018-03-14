@@ -170,6 +170,12 @@
           )->row();
 
           break;
+        case "room-charge":
+         $result = get_instance()->db->query(
+           "SELECT DISTINCT marker.room_id, room.*, CONCAT(room_floor, iF(SUBSTR(room.room_number,1,3) = 'SUI', SUBSTR(room.room_number, 5, 2),  SUBSTR(room.room_number, 9, 2) )) as nama_kamar FROM `marker`
+            join room on (marker.room_id = room.room_id)
+            WHERE `reservation_id` = " . get_instance()->db->escape($identifier)
+          )->result();
       }
 
       return $result;
