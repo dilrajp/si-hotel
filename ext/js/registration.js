@@ -10,6 +10,8 @@ app.controller("detailController", function ($scope) {
   $scope.detail          = json(baseurl + "api/detail/registration/" + hash());
   $scope.deposit         = $scope.detail.deposit_list;
   $scope.balance         = $scope.detail.balance;
+  $scope.totaldeposit    = $scope.detail.totaldeposit;
+  $scope.totalbilling    = $scope.detail.totalbilling;
 
   $scope.addDeposit = function (reservation_id) {
     var reservation = json(baseurl + "api/detail/reservation-for-deposit/" + reservation_id);

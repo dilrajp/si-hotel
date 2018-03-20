@@ -108,17 +108,24 @@
 
           $jumlah = array();
           $total = 0;
+          $deposit = 0;
+          $billing = 0;
 
           foreach ($result->deposit_list as $value) {
             if ($value->note == 'Added Deposit' || substr($value->note,0,11) == 'Correction-' )  {
               $total = $total + $value->amount;
+              $deposit = $deposit + $value->amount;
             } else {
               $total = $total - $value->amount;
+              $billing = $billing + $value->amount;
             }
             $jumlah[] = $total;
           }
 
           $result->balance = $jumlah;
+          $result->totaldeposit = $deposit;
+          $result->totalbilling = $billing;
+          $result->totalbalance = $deposit - $billing;
           break;
         case "reservation":
           $result = get_instance()->db->select("

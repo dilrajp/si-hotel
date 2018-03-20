@@ -191,7 +191,7 @@ echo $data['asd']->asd;*/
                     <th>#</th>
                     <th>Date</th>
                     <th>Time</th>
-                    <th>Description</th>
+                    <th width="15%">Description</th>
                     <th>Debit</th>
                     <th>Credit</th>
                     <th>Balance</th>
@@ -202,7 +202,7 @@ echo $data['asd']->asd;*/
                     <td><span ng-bind="$index+1">{{each}}</span></td>
                     <td><span ng-bind="each.formatted_date.slice(0, each.formatted_date.length - 7)"></span></td>
                     <td><span ng-bind="each.formatted_date.substr(each.formatted_date.length - 6, 5)"></span></td>
-                    <td><label class="label label-{{each.note === 'Added Deposit' || each.note.substr(0,11) === 'Correction-' ? 'success':'warning'}}" ng-bind="each.note.substr(0,11) === 'Correction-' ? each.note.substr(11) : each.note"></label></td>
+                    <td width="15%"><label class="label label-{{each.note === 'Added Deposit' || each.note.substr(0,11) === 'Correction-' ? 'success':'warning'}}" ng-bind="each.note.substr(0,11) === 'Correction-' ? each.note.substr(11) : each.note"></label></td>
                     <td><span ng-if="each.note !== 'Added Deposit' && each.note.substr(0,11) !== 'Correction-'" ng-bind="each.amount | rupiah"></td>
                     <td><span ng-if="each.note === 'Added Deposit' || each.note.substr(0,11) === 'Correction-'" ng-bind="each.amount | rupiah"></span></td>
                     <td align="left"><span ng-bind="balance[$index] >= 0 ? '('+(balance[$index] | rupiah)+')' : (balance[$index]*(-1) | rupiah)"></span></td>
@@ -257,17 +257,17 @@ echo $data['asd']->asd;*/
               <tr>
                 <td><strong>Deposit</strong></td>
                 <td align="center">:</td>
-                <td align="right"><label class="label label-success" ng-bind="detail.deposit | rupiah"></label></td>
+                <td align="right"><label class="label label-success" ng-bind="detail.totaldeposit | rupiah"></label></td>
               </tr>
               <tr>
                 <td><strong>Billing</strong></td>
                 <td align="center">:</td>
-                <td align="right"><label class="label label-warning" ng-bind="detail.billing | rupiah"></label></td>
+                <td align="right"><label class="label label-warning" ng-bind="detail.totalbilling | rupiah"></label></td>
               </tr>
               <tr>
                 <td><strong>Balance</strong></td>
                 <td align="center">:</td>
-                <td align="right"><label class="label label-primary" ng-bind="parseInt(detail.deposit) - parseInt(detail.billing) | rupiah"></label></td>
+                <td align="right"><label class="label label-primary" ng-bind="detail.totalbalance | rupiah"></label></td>
               </tr>
               <tr>
                 <td colspan="3">
@@ -315,7 +315,7 @@ echo $data['asd']->asd;*/
           <table width="100%">
             <tr>
               <td align="left" width="30%"></td>
-              <td align="center" width="30%">
+              <td align="center" width="40%">
                 <!--Print-->
                 <a href="javascript:window.print()" class="btn btn-dark waves-effect waves-light"><i class="fa fa-print"></i></a>
                 <!--Add Deposit-->
@@ -575,18 +575,13 @@ echo $data['asd']->asd;*/
         forceParse: 0
     });
 
-    $('#tanggal')
-    .datetimepicker()
-    .on('hide', function(ev){
-       //console.log("asd");
+    $('#tanggal').datetimepicker().on('change', function(ev){
        $.ajax({  
-            url   : '<?php echo base_url()?>Api/hargakamar',  
-            data: $("#charge-kamar").serialize(),
-            type: "POST",  
-            dataType: "json",
+          url   : '<?php echo base_url()?>Api/hargakamar',  
+          data: $("#charge-kamar").serialize(),
+          type: "POST",  
+          dataType: "json",
           success: function(data){
-              console.log("ngintip-ngintip nih");
-              
               $( "#view_harga" ).attr('value',data.view );
               $( "#room_charge" ).attr('value',data.harga.Harga );
           }  
