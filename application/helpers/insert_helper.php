@@ -81,7 +81,7 @@
           $_POST = array(
            "registration_id"     => uuid(),
            "registration_note"   => $_POST["registration_note"],
-           "registration_amount" => $_POST["registration_amount"],
+           "registration_amount" => abs($_POST["registration_amount"]),
            "registration_date"   => date('Y-m-d H:i:s', strtotime($_POST["registration_date"])),
            "reservation_id"      => $_POST["reservation_id"],
           );

@@ -13,6 +13,7 @@ $tgl = substr('2018-03-18 15:01:20', 0, 10);
 if($tgl == 1 ){
   echo "xxx";
 }
+//echo(abs(-118945) . "<br>");
 
  $result = "8b758f5c-b4db-d32a-3443-d8ea6bf1774f|861658ed-e812-2cf5-31b2-cba82ab2f271";
             $result_explode = explode('|', $result);
@@ -202,9 +203,9 @@ echo $data['asd']->asd;*/
                     <td><span ng-bind="$index+1">{{each}}</span></td>
                     <td><span ng-bind="each.formatted_date.slice(0, each.formatted_date.length - 7)"></span></td>
                     <td><span ng-bind="each.formatted_date.substr(each.formatted_date.length - 6, 5)"></span></td>
-                    <td width="15%"><label class="label label-{{each.note === 'Added Deposit' || each.note.substr(0,11) === 'Correction-' ? 'success':'warning'}}" ng-bind="each.note.substr(0,11) === 'Correction-' ? each.note.substr(11) : each.note"></label></td>
-                    <td><span ng-if="each.note !== 'Added Deposit' && each.note.substr(0,11) !== 'Correction-'" ng-bind="each.amount | rupiah"></td>
-                    <td><span ng-if="each.note === 'Added Deposit' || each.note.substr(0,11) === 'Correction-'" ng-bind="each.amount | rupiah"></span></td>
+                    <td width="15%"><label class="label label-{{each.note === 'Added Deposit' || each.note.substr(0,11) === 'Correction-'  || each.note === 'Cash' || each.note === 'CC' ? 'success':'warning'}}" ng-bind="each.note.substr(0,11) === 'Correction-' ? each.note.substr(11) : each.note"></label></td>
+                    <td><span ng-if="each.note !== 'Added Deposit' && each.note.substr(0,11) !== 'Correction-' && each.note !== 'Cash' && each.note !== 'CC'" ng-bind="each.amount | rupiah"></td>
+                    <td><span ng-if="each.note === 'Added Deposit' || each.note.substr(0,11) === 'Correction-' || each.note === 'Cash' || each.note === 'CC'" ng-bind="each.amount | rupiah"></span></td>
                     <td align="left"><span ng-bind="balance[$index] >= 0 ? '('+(balance[$index] | rupiah)+')' : (balance[$index]*(-1) | rupiah)"></span></td>
                     </td>
                   </tr>
@@ -336,7 +337,7 @@ echo $data['asd']->asd;*/
     </div>
   </div>
 
-  <div id="modal" class="modal fade" role="dialog" style="display: none;">
+  <div id="moda" class="modal fade" role="dialog" style="display: none;">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header text-lg-center" style="background: rgb(100, 176, 242); color:white;">
@@ -360,6 +361,105 @@ echo $data['asd']->asd;*/
             </div>
 
           </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <div id="modal" class="modal fade" role="dialog" style="display: none;">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header text-lg-center" style="background: rgb(100, 176, 242); color:white;">
+          Check-out for Reservation<br/> <strong>'{{detail.reservation_id}}'</strong><br/>
+        </div>
+        <div class="modal-body">
+        <div class="case">
+              <div ng-if="detail.totalbalance < 0">
+                <!-- Bill: <strong>'{{detail.totalbalance}}'</strong> -->
+              <form action="<?php echo base_url('Api/checkout_bayar'); ?>" method="post">
+                <input type="hidden" name="reservation_id" value="{{detail.reservation_id}}"/>
+                <table class="table">
+                  <tr>
+                    <td style="vertical-align: middle;">Bill </td>
+                    <td align="right">
+                       <input type="text" name="deposit_amount2" class="form-control"  value="{{detail.totalbalance}}" readonly="" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="vertical-align: middle;">Payment </td>
+                    <td>
+                      <select  name="deposit_name" class="form-control" required>
+                        <option value="Cash" >Cash</option>     
+                        <option  value="CC">CC </option>     
+                      </select>
+                    </td>
+                  </tr>
+                    <tr>
+                    <td style="vertical-align: middle;">Amount </td>
+                    <td align="right">
+                       <input type="text" name="deposit_amount" class="form-control"   />
+                    </td>
+                  </tr>
+                <!--   <tr>
+                    <td style="vertical-align: middle"> Tanggal </td>
+                    <td>
+
+                    </td>
+                  </tr> -->
+                </table>
+                
+                <div class="form-group">
+                  <input type="submit" class="btn btn-sm btn-primary" value="Add "/>
+                  <input type="button" class="btn btn-sm btn-warning" value="Cancel" data-dismiss="modal"/>
+                </div>
+
+                </form>
+
+              </div>
+              <div ng-if="detail.totalbalance >= 1">
+                <form action="<?php echo base_url('Api/checkout_dibayar'); ?>" method="post">
+                <input type="hidden" name="reservation_id" value="{{detail.reservation_id}}"/>
+                <table class="table">
+                  <tr>
+                    <td style="vertical-align: middle;">Change </td>
+                    <td align="right">
+                       <input type="text" name="registration_amount" class="form-control"  value="{{detail.totalbalance}}" readonly="" />
+                    </td>
+                  </tr>
+                <!--   <tr>
+                    <td style="vertical-align: middle"> Tanggal </td>
+                    <td>
+
+                    </td>
+                  </tr> -->
+                </table>
+                
+                <div class="form-group">
+                  <input type="submit" class="btn btn-sm btn-primary" value="Add "/>
+                  <input type="button" class="btn btn-sm btn-warning" value="Cancel" data-dismiss="modal"/>
+                </div>
+
+                </form>
+              </div>
+              <div ng-else">
+              <form class="reloadform" action="{{checkout_url}}" method="post">
+                <div class="form-group row">
+                  <input type="hidden" name="reservation_id" value="{{detail.reservation_id}}"/>
+
+                  <div class="col-md-12">
+                    <strong>Start check-out for this reservation?</strong>
+                  </div>
+                </div>
+
+                <hr/>
+
+                <div class="form-group">
+                  <input type="submit" class="btn btn-sm btn-primary" value="Yes"/>
+                  <input type="button" class="btn btn-sm btn-warning" value="No" data-dismiss="modal"/>
+                </div>
+               </form>
+             </div> 
+        </div>
         </div>
       </div>
     </div>
