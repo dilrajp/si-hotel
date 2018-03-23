@@ -160,6 +160,36 @@
           WHERE `reservation_id`={$reservation_id}
           ORDER BY `room_number`, `marker_date` ASC
           ")->result();
+
+          $result->deposit_list = get_instance()->db->query("
+            (SELECT `deposit_date`      AS `date`, DATE_FORMAT(`deposit_date`, '%d %M %Y (%H:%i)') AS `formatted_date`, `deposit_name` AS `note`, `deposit_amount` AS `amount` FROM `deposit`
+            WHERE `reservation_id`={$reservation_id})
+            UNION ALL
+            (SELECT `registration_date` AS `date`, DATE_FORMAT(`registration_date`, '%d %M %Y (%H:%i)') AS `formatted_date`, `registration_note`  AS `note`, `registration_amount` AS `amount` FROM `registration`
+            WHERE `reservation_id`={$reservation_id})
+            ORDER BY `date` ASC
+          ")->result();
+
+          $jumlah = array();
+          $total = 0;
+          $deposit = 0;
+          $billing = 0;
+
+          foreach ($result->deposit_list as $value) {
+            if ($value->note == 'Added Deposit' || substr($value->note,0,11) == 'Correction-' || $value->note == 'Cash' || $value->note == 'CC' )  {
+              $total = $total + $value->amount;
+              $deposit = $deposit + $value->amount;
+            } else {
+              $total = $total - $value->amount;
+              $billing = $billing + $value->amount;
+            }
+            $jumlah[] = $total;
+          }
+
+          $result->balance = $total;
+          $result->totaldeposit = $deposit;
+          $result->totalbilling = $billing;
+          $result->totalbalance = $deposit - $billing;
           break;
         case "reservation-for-deposit":
           $result = get_instance()->db->query(

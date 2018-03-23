@@ -113,7 +113,7 @@
                             DATE_FORMAT(`reservation_dateout`, '%d %M %Y') AS `reservation_dateout`,
                             CONCAT(`guest_lastname`, '/',  `guest_firstname`, ', ', `guest_title`) AS `guest_name`,
                             IFNULL(`deposit`, 0) AS `deposit`,
-                            (IFNULL(`billing`, 0) + SUM(`marker_roomrate`)) AS `billing`,
+                            IFNULL(`billing`, 0) AS `billing`,
                             `operator_username`
                     FROM `reservation`
                     JOIN  `guest` USING(`reservation_id`)
@@ -125,6 +125,14 @@
                     ORDER BY `reservation_id` DESC";
 
           $result = get_instance()->db->query($query)->result();
+
+          $listdeposit = array();
+          $listbillling = array();
+          foreach ($result as $value) {
+            if($value->reservation_status == 'Waiting'){
+              $listdeposit[] = $value->deposit;
+            }
+          }
           break;
         case "room";
           $query = "SELECT  `category_id`, `category_name`, IFNULL(`room_count`, 0) AS `room_count`, `price_fitweekday`, `price_groupweekday`, `price_fitweekend`, `price_groupweekend`, `category_extrabed`

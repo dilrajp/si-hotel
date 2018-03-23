@@ -43,13 +43,24 @@
           print_r(parse_data());
           break;
         case "deposit":
-          $_POST = array(
-           "deposit_id"     => uuid(),
-           "deposit_amount" => $_POST["deposit_amount"],
-           "deposit_date"   => timestamp(true),
-           "reservation_id" => $_POST["reservation_id"],
-           "deposit_name"   => "Correction-".$_POST['deposit_name']
+          if ($_POST['deposit_name'] != 'Added Deposit') {
+            $_POST = array(
+             "deposit_id"     => uuid(),
+             "deposit_amount" => $_POST["deposit_amount"],
+             "deposit_date"   => timestamp(true),
+             "reservation_id" => $_POST["reservation_id"],
+             "deposit_name"   => "Correction-".$_POST['deposit_name']
            );
+          } else {
+            $_POST = array(
+             "deposit_id"     => uuid(),
+             "deposit_amount" => $_POST["deposit_amount"],
+             "deposit_date"   => timestamp(true),
+             "reservation_id" => $_POST["reservation_id"],
+             "deposit_name"   => "Added Deposit"
+            );
+          }
+          
 
           if ($_POST["deposit_amount"] == 0) return false;
           break;
