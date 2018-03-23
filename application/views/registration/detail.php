@@ -400,12 +400,6 @@ echo $data['asd']->asd;*/
                        <input type="text" name="deposit_amount" class="form-control"   />
                     </td>
                   </tr>
-                <!--   <tr>
-                    <td style="vertical-align: middle"> Tanggal </td>
-                    <td>
-
-                    </td>
-                  </tr> -->
                 </table>
                 
                 <div class="form-group">
@@ -426,12 +420,6 @@ echo $data['asd']->asd;*/
                        <input type="text" name="registration_amount" class="form-control"  value="{{detail.totalbalance}}" readonly="" />
                     </td>
                   </tr>
-                <!--   <tr>
-                    <td style="vertical-align: middle"> Tanggal </td>
-                    <td>
-
-                    </td>
-                  </tr> -->
                 </table>
                 
                 <div class="form-group">
@@ -440,6 +428,7 @@ echo $data['asd']->asd;*/
                 </div>
 
                 </form>
+
               </div>
               <div ng-else ">
               <form class="reloadform" action="{{checkout_url}}" method="post">
@@ -460,6 +449,10 @@ echo $data['asd']->asd;*/
                </form>
              </div> 
         </div>
+
+              </div>    
+          </div>
+
         </div>
       </div>
     </div>
@@ -475,6 +468,8 @@ echo $data['asd']->asd;*/
           <form class="reloadform" action="{{deposit_url}}" method="post">
 
             <input type="hidden" name="reservation_id" value="{{detail.reservation_id}}"/>
+
+            <input type="hidden" name="deposit_name" value="Added Deposit" />
 
             <table class="table">
               <tr>
@@ -626,7 +621,7 @@ echo $data['asd']->asd;*/
                  
                </td>
                 <td>
-                  <input type="text" id="tanggal" name="registration_date" class="form-control input-append date form_datetime" data-date-format="yyyy-mm-dd hh:ii:00" name="tanggal" required readonly>
+                  <input type="text" id="tanggal" name="registration_date" class="form-control input-append date form_datetime" data-date-format="yyyy-mm-dd 00:01:00" name="tanggal" required readonly>
                 </td>
                 </tr>
                 <tr>
@@ -671,13 +666,13 @@ echo $data['asd']->asd;*/
         autoclose: 1,
         todayHighlight: 1,
         startView: 2,
-        minView: 0,
+        minView: 2,
         forceParse: 0
     });
 
     $('#tanggal').datetimepicker().on('change', function(ev){
        $.ajax({  
-          url   : '<?php echo base_url()?>Api/hargakamar',  
+          url   : "<?php echo base_url('Api/hargakamar')?>",  
           data: $("#charge-kamar").serialize(),
           type: "POST",  
           dataType: "json",

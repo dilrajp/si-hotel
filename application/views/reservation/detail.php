@@ -151,24 +151,27 @@
                   <tr>
                     <th>#</th>
                     <th>Date</th>
-                    <th>Room</th>
-                    <th>Unit Cost</th>
+                    <th>Time</th>
+                    <th>Description</th>
+                    <th>Debit</th>
+                    <th>Credit</th>
+                    <th>Balance</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr ng-repeat="each in detail.detail">
+                  <tr ng-repeat="each in detail.deposit_list">
                     <td><span ng-bind="$index+1"></span></td>
-                    <td><span ng-bind="each.formatted_marker_date"></span></td>
-                    <td><span ng-bind="each.category_name + ' (' + each.room_number + ')'"></span></td>
-                    <td align="right">
-                      <label ng-if="each.formatted_marker_date === detail.reservation_dateout" class="label label-warning">Checkout</label>
-                      <span ng-if="each.formatted_marker_date !== detail.reservation_dateout" ng-bind="each.marker_roomrate | rupiah"></span>
-                    </td>
+                    <td><span ng-bind="each.formatted_date.slice(0, each.formatted_date.length - 7)"></span></td>
+                    <td><span ng-bind="each.formatted_date.substr(each.formatted_date.length - 6, 5)"></span></td>
+                    <td><label class="label label-{{each.note === 'Added Deposit' || each.note.substr(0,11) === 'Correction-'  || each.note === 'Cash' || each.note === 'CC' ? 'success':'warning'}}" ng-bind="each.note.substr(0,11) === 'Correction-' ? each.note.substr(11) : each.note"></label></td>
+                    <td><span ng-if="each.note !== 'Added Deposit' && each.note.substr(0,11) !== 'Correction-' && each.note !== 'Cash' && each.note !== 'CC'" ng-bind="each.amount | rupiah"></td>
+                    <td><span ng-if="each.note === 'Added Deposit' || each.note.substr(0,11) === 'Correction-' || each.note === 'Cash' || each.note === 'CC'" ng-bind="each.amount | rupiah"></span></td>
+                    <td align="left"><span ng-bind="detail.balance >= 0 ? '('+(detail.balance | rupiah)+')' : (detail.balance*(-1) | rupiah)"></span></td>
                   </tr>
                 </tbody>
                 <tfoot style="background:silver;">
-                  <td colspan="3"></td>
-                  <td align="right"><strong ng-bind="getSubtotal() | rupiah"></td>
+                  <td colspan="6"></td>
+                  <td align="right"><strong ng-bind="detail.balance | rupiah"></td>
                 </tfoot>
               </table>
             </div>
@@ -192,12 +195,12 @@
               <tr>
                 <td><strong>Billing</strong></td>
                 <td align="center">:</td>
-                <td align="right"><label class="label label-warning" ng-bind="detail.billing | rupiah"></label></td>
+                <td align="right"><label class="label label-warning" ng-bind="detail.totalbilling | rupiah"></label></td>
               </tr>
               <tr>
                 <td><strong>Balance</strong></td>
                 <td align="center">:</td>
-                <td align="right"><label class="label label-primary" ng-bind="parseInt(detail.deposit) - parseInt(detail.billing) | rupiah"></label></td>
+                <td align="right"><label class="label label-primary" ng-bind="detail.totalbalance | rupiah"></label></td>
               </tr>
               <tr>
                 <td colspan="3">
@@ -236,7 +239,7 @@
               </tr>
             </table>
             <hr>
-            <h3 class="text-xs-right"><span ng-bind="getTotal() | rupiah"></span></h3>
+            <!-- <h3 class="text-xs-right"><span ng-bind="detail.totalbalance | rupiah"></span></h3> -->
           </div>
         </div>
 
@@ -300,6 +303,8 @@
           <form class="reloadform" action="{{deposit_url}}" method="post">
 
             <input type="hidden" name="reservation_id" value="{{detail.reservation_id}}"/>
+
+            <input type="hidden" name="deposit_name" value="Added Deposit" />
 
             <table class="table">
               <tr>
