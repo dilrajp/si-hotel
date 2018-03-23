@@ -441,7 +441,7 @@ echo $data['asd']->asd;*/
 
                 </form>
               </div>
-              <div ng-else">
+              <div ng-else ">
               <form class="reloadform" action="{{checkout_url}}" method="post">
                 <div class="form-group row">
                   <input type="hidden" name="reservation_id" value="{{detail.reservation_id}}"/>
