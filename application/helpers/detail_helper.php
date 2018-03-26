@@ -191,7 +191,7 @@
             $jumlah[] = $total;
           }
 
-          $result->balance = $total;
+          $result->balance = $jumlah;
           $result->totaldeposit = $deposit;
           $result->totalbilling = $billing;
           $result->totalbalance = $deposit - $billing;

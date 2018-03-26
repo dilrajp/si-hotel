@@ -166,12 +166,12 @@
                     <td><label class="label label-{{each.note === 'Added Deposit' || each.note.substr(0,11) === 'Correction-'  || each.note === 'Cash' || each.note === 'CC' ? 'success':'warning'}}" ng-bind="each.note.substr(0,11) === 'Correction-' ? each.note.substr(11) : each.note"></label></td>
                     <td><span ng-if="each.note !== 'Added Deposit' && each.note.substr(0,11) !== 'Correction-' && each.note !== 'Cash' && each.note !== 'CC'" ng-bind="each.amount | rupiah"></td>
                     <td><span ng-if="each.note === 'Added Deposit' || each.note.substr(0,11) === 'Correction-' || each.note === 'Cash' || each.note === 'CC'" ng-bind="each.amount | rupiah"></span></td>
-                    <td align="left"><span ng-bind="detail.balance >= 0 ? '('+(detail.balance | rupiah)+')' : (detail.balance*(-1) | rupiah)"></span></td>
+                    <td align="left"><span ng-bind="detail.balance[$index] >= 0 ? '('+(detail.balance[$index] | rupiah)+')' : (detail.balance[$index]*(-1) | rupiah)"></span></td>
                   </tr>
                 </tbody>
                 <tfoot style="background:silver;">
                   <td colspan="6"></td>
-                  <td align="right"><strong ng-bind="detail.balance | rupiah"></td>
+                  <td align="right"><strong ng-bind="detail.totalbalance | rupiah"></td>
                 </tfoot>
               </table>
             </div>
