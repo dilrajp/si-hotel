@@ -127,6 +127,9 @@
             $jumlah[] = $total;
           }
 
+          if($jumlah == NULL){
+            $jumlah = 0;
+          }
           $result->balance = $jumlah;
           $result->totaldeposit = $deposit;
           $result->totalbilling = $billing;

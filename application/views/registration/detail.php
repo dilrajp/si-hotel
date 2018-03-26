@@ -1,35 +1,22 @@
 <div class="row">
   <div class="col-sm-12">
-    <h4 class="page-title">Invoice
-<?php 
-function isWeekend($date) {
-    $weekDay = date('w', strtotime($date));
-    return ($weekDay == 0 || $weekDay == 6);
-}
-
-$tgl = 
-$tgl = substr('2018-03-18 15:01:20', 0, 10);
-//echo isWeekend($tgl);
-if($tgl == 1 ){
-  echo "xxx";
-}
-//echo(abs(-118945) . "<br>");
-
- $result = "8b758f5c-b4db-d32a-3443-d8ea6bf1774f|861658ed-e812-2cf5-31b2-cba82ab2f271";
-            $result_explode = explode('|', $result);
-           // echo "Model: ". $result_explode[0]."<br />";
-            //echo "Colour: ". $result_explode[1]."<br />"
-
-/*$data['asd'] = $this->db->query("SELECT price_fitweekend as 'asd'
-                                  FROM price
-                                  JOIN room on (room.category_id = price.category_id)
-                                  WHERE room.category_id = '861658ed-e812-2cf5-31b2-cba82ab2f271' and room.room_id = '8b758f5c-b4db-d32a-3443-d8ea6bf1774f'  
-                                  ORDER BY `price`.`price_date` DESC
-                                  LIMIT 1")->row();
-echo $data['asd']->asd;*/
- ?></h4>
+    <h4 class="page-title">Invoice</h4>
   </div>
 </div>
+<script type="text/javascript">
+   function getval(sel)
+      {
+          
+            if (sel.value == "CC") {
+      $('#firstname').val(Math.abs($('#balancez').val()));
+      $('#firstname').attr('readonly', true);
+        }else if(sel.value == "Cash"){
+      $('#firstname').val(' ');
+      $('#firstname').attr('readonly', false);   
+         
+      }
+        }
+</script>
 <style type="text/css">
   .editOption{
     width: 90%;
@@ -382,22 +369,23 @@ echo $data['asd']->asd;*/
                     <tr>
                       <td style="vertical-align: middle;">Bill </td>
                       <td align="right">
-                         <input type="text" name="deposit_amount2" class="form-control"  value="{{detail.totalbalance}}" readonly="" />
+                         <input type="text" name="deposit_amount2" class="form-control" id="balancez" value="{{detail.totalbalance}}" readonly="" />
                       </td>
                     </tr>
                     <tr>
                       <td style="vertical-align: middle;">Payment </td>
                       <td>
-                        <select  name="deposit_name" class="form-control" required>
+                        <select  name="deposit_name" class="form-control" onchange="getval(this);" required>
                           <option value="Cash" >Cash</option>     
-                          <option  value="CC">CC </option>     
+                          <option value="CC">CC </option>     
                         </select>
                       </td>
                     </tr>
+                
                     <tr>
                       <td style="vertical-align: middle;">Amount </td>
                       <td align="right">
-                         <input type="text" name="deposit_amount" class="form-control"   />
+                         <input type="text" name="deposit_amount" class="form-control"  id="firstname" />
                       </td>
                     </tr>
                   </table>
@@ -407,7 +395,9 @@ echo $data['asd']->asd;*/
                   </div>
                 </form>
               </div>
-              <div ng-if="detail.totalbalance >= 1">
+
+
+              <div ng-if="detail.totalbalance >= 1 ">
                 <form action="<?php echo base_url('Api/checkout_dibayar'); ?>" method="post">
                   <input type="hidden" name="reservation_id" value="{{detail.reservation_id}}"/>
                   <table class="table">
@@ -424,7 +414,8 @@ echo $data['asd']->asd;*/
                   </div>
                 </form>
               </div>
-              <!-- <div ng-else ">
+
+              <div ng-if ="!(detail.totalbalance >= 1 || detail.totalbalance < 0)">
                 <form class="reloadform" action="{{checkout_url}}" method="post">
                   <div class="form-group row">
                     <input type="hidden" name="reservation_id" value="{{detail.reservation_id}}"/>
@@ -441,7 +432,8 @@ echo $data['asd']->asd;*/
                     <input type="button" class="btn btn-sm btn-warning" value="No" data-dismiss="modal"/>
                   </div>
                 </form>
-             </div>  -->    
+             </div>
+                
           </div>
         </div>
       </div>
@@ -637,6 +629,8 @@ echo $data['asd']->asd;*/
 
 <script type="text/javascript">
   $(document).ready(function(){
+
+    
     $('#datetimepicker').datetimepicker({
         weekStart: 1,
         todayBtn:  1,

@@ -68,8 +68,10 @@
                         <td align="center"><span ng-bind="each.reservation_dateout"></span></td>
                         <td align="center"><span class="text-nowrap" ng-bind="each.guest_name"></span></td>
                         <td align="{{hasBalance(each.deposit, each.billing) ? 'right' : 'center'}}">
-                          <label ng-if="(each.deposit - each.billing) >= 0" class="label label-primary" ng-bind="(each.deposit - each.billing) | rupiah"></label>
+                          <label ng-if="(each.deposit - each.billing) > 0" class="label label-primary" ng-bind="(each.deposit - each.billing) | rupiah"></label>
                           <span ng-if="(each.deposit - each.billing) < 0" class="text-nowrap" ng-bind="(each.deposit - each.billing) | rupiah"></span>
+                          <label ng-if="!((each.deposit - each.billing) > 0 || (each.deposit - each.billing) < 0)" class="label label-primary" ng-bind="0"></label>
+
                         </td>
                         <td align="center">
                           <label class="label label-{{labelClass(each.reservation_status)}}" ng-if="(each.reservation_status === 'Waiting')">Expected</label>
