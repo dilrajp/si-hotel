@@ -13,6 +13,16 @@ app.controller("detailController", function ($scope) {
   $scope.totaldeposit    = $scope.detail.totaldeposit;
   $scope.totalbilling    = $scope.detail.totalbilling;
 
+  $scope.initializeDatepicker =  function(){   $('.checkout_date').datetimepicker({
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 0,
+        forceParse: 0
+    }) };
+
   $scope.addDeposit = function (reservation_id) {
     var reservation = json(baseurl + "api/detail/reservation-for-deposit/" + reservation_id);
 

@@ -143,7 +143,7 @@
       $data = array(
            "deposit_id"     => uuid(),
            "deposit_amount" => abs($this->input->post('deposit_amount')),
-           "deposit_date"   => date('Y-m-d H:i:s'),
+           "deposit_date"   => date('Y-m-d H:i:s', strtotime($_POST["tanggal"])),
            "reservation_id" => $this->input->post('reservation_id'),
            "deposit_name"   => $this->input->post('deposit_name')
            );
@@ -155,7 +155,7 @@
            "registration_id"     => uuid(),
            "registration_note"   => 'Change',
            "registration_amount" => $selisih,
-           "registration_date"   => date('Y-m-d H:i:s'),
+           "registration_date"   => date('Y-m-d H:i:s', strtotime($_POST["tanggal"])),
            "reservation_id"      => $_POST["reservation_id"],
           );
       $this->db->insert('registration',$data2);
@@ -182,7 +182,7 @@
            "registration_id"     => uuid(),
            "registration_note"   => 'Change',
            "registration_amount" => abs($this->input->post('registration_amount')),
-           "registration_date"   => date('Y-m-d H:i:s'),
+           "registration_date"   => date('Y-m-d H:i:s', strtotime($_POST["tanggal"])),
            "reservation_id"      => $_POST["reservation_id"],
           );
       $this->db->insert('registration',$data2);

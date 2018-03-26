@@ -47,7 +47,7 @@
             $_POST = array(
              "deposit_id"     => uuid(),
              "deposit_amount" => $_POST["deposit_amount"],
-             "deposit_date"   => timestamp(true),
+             "deposit_date"   => date('Y-m-d H:i:s', strtotime($_POST["tanggal"])),
              "reservation_id" => $_POST["reservation_id"],
              "deposit_name"   => "Correction-".$_POST['deposit_name']
            );
@@ -55,7 +55,7 @@
             $_POST = array(
              "deposit_id"     => uuid(),
              "deposit_amount" => $_POST["deposit_amount"],
-             "deposit_date"   => timestamp(true),
+             "deposit_date"   => date('Y-m-d H:i:s', strtotime($_POST["tanggal"])),
              "reservation_id" => $_POST["reservation_id"],
              "deposit_name"   => "Added Deposit"
             );
@@ -239,7 +239,7 @@
           break;
       }
 
-      if($section != 'registration'){
+      if($section != 'registration' && $section != 'deposit'){
         $_POST[ str_replace("_", "", $section) . "_date" ] = timestamp(true);  
       }
 
