@@ -376,59 +376,53 @@ echo $data['asd']->asd;*/
         <div class="case">
               <div ng-if="detail.totalbalance < 0">
                 <!-- Bill: <strong>'{{detail.totalbalance}}'</strong> -->
-              <form action="<?php echo base_url('Api/checkout_bayar'); ?>" method="post">
-                <input type="hidden" name="reservation_id" value="{{detail.reservation_id}}"/>
-                <table class="table">
-                  <tr>
-                    <td style="vertical-align: middle;">Bill </td>
-                    <td align="right">
-                       <input type="text" name="deposit_amount2" class="form-control"  value="{{detail.totalbalance}}" readonly="" />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="vertical-align: middle;">Payment </td>
-                    <td>
-                      <select  name="deposit_name" class="form-control" required>
-                        <option value="Cash" >Cash</option>     
-                        <option  value="CC">CC </option>     
-                      </select>
-                    </td>
-                  </tr>
+                <form action="<?php echo base_url('Api/checkout_bayar'); ?>" method="post">
+                  <input type="hidden" name="reservation_id" value="{{detail.reservation_id}}"/>
+                  <table class="table">
                     <tr>
-                    <td style="vertical-align: middle;">Amount </td>
-                    <td align="right">
-                       <input type="text" name="deposit_amount" class="form-control"   />
-                    </td>
-                  </tr>
-                </table>
-                
-                <div class="form-group">
-                  <input type="submit" class="btn btn-sm btn-primary" value="Add "/>
-                  <input type="button" class="btn btn-sm btn-warning" value="Cancel" data-dismiss="modal"/>
-                </div>
-
+                      <td style="vertical-align: middle;">Bill </td>
+                      <td align="right">
+                         <input type="text" name="deposit_amount2" class="form-control"  value="{{detail.totalbalance}}" readonly="" />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="vertical-align: middle;">Payment </td>
+                      <td>
+                        <select  name="deposit_name" class="form-control" required>
+                          <option value="Cash" >Cash</option>     
+                          <option  value="CC">CC </option>     
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="vertical-align: middle;">Amount </td>
+                      <td align="right">
+                         <input type="text" name="deposit_amount" class="form-control"   />
+                      </td>
+                    </tr>
+                  </table>
+                  <div class="form-group">
+                    <input type="submit" class="btn btn-sm btn-primary" value="Add "/>
+                    <input type="button" class="btn btn-sm btn-warning" value="Cancel" data-dismiss="modal"/>
+                  </div>
                 </form>
-
               </div>
               <div ng-if="detail.totalbalance >= 1">
                 <form action="<?php echo base_url('Api/checkout_dibayar'); ?>" method="post">
-                <input type="hidden" name="reservation_id" value="{{detail.reservation_id}}"/>
-                <table class="table">
-                  <tr>
-                    <td style="vertical-align: middle;">Change </td>
-                    <td align="right">
-                       <input type="text" name="registration_amount" class="form-control"  value="{{detail.totalbalance}}" readonly="" />
-                    </td>
-                  </tr>
-                </table>
-                
-                <div class="form-group">
-                  <input type="submit" class="btn btn-sm btn-primary" value="Add "/>
-                  <input type="button" class="btn btn-sm btn-warning" value="Cancel" data-dismiss="modal"/>
-                </div>
-
+                  <input type="hidden" name="reservation_id" value="{{detail.reservation_id}}"/>
+                  <table class="table">
+                    <tr>
+                      <td style="vertical-align: middle;">Change </td>
+                      <td align="right">
+                         <input type="text" name="registration_amount" class="form-control"  value="{{detail.totalbalance}}" readonly="" />
+                      </td>
+                    </tr>
+                  </table>
+                  <div class="form-group">
+                    <input type="submit" class="btn btn-sm btn-primary" value="Add "/>
+                    <input type="button" class="btn btn-sm btn-warning" value="Cancel" data-dismiss="modal"/>
+                  </div>
                 </form>
-
               </div>
               <!-- <div ng-else ">
                 <form class="reloadform" action="{{checkout_url}}" method="post">
@@ -447,9 +441,7 @@ echo $data['asd']->asd;*/
                     <input type="button" class="btn btn-sm btn-warning" value="No" data-dismiss="modal"/>
                   </div>
                 </form>
-             </div>  -->
-             </div>
-            </div>    
+             </div>  -->    
           </div>
         </div>
       </div>

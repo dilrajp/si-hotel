@@ -198,7 +198,7 @@
           break;
         case "reservation-for-deposit":
           $result = get_instance()->db->query(
-           "SELECT COUNT(*) AS `count`, IFNULL(`deposit_amount`, 0) AS `amount`
+           "SELECT COUNT(*) AS `count`, IFNULL(SUM(`deposit_amount`), 0) AS `amount`
             FROM `deposit`
             WHERE `reservation_id` = " . get_instance()->db->escape($identifier)
           )->row();
