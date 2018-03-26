@@ -11,7 +11,7 @@
                     <table class="table table-bordered">
                       <tr>
                         <td width="160">Room Number</td>
-                        <td><span ng-bind="room.room_number"></span></td>
+                        <td><span ng-bind="room.nama_kamar"></span></td>
                       </tr>
                       <tr>
                         <td>Floor</td>

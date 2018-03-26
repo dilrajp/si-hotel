@@ -202,11 +202,9 @@
                 <td align="center">:</td>
                 <td align="right"><label class="label label-primary" ng-bind="detail.totalbalance | rupiah"></label></td>
               </tr>
-              <tr>
-                <td colspan="3">
-                  <hr/>
-                </td>
-              </tr>
+            </table>
+            <hr/>
+            <table>
               <tr>
                 <td><strong>Special Request</strong></td>
                 <td align="center">:</td>

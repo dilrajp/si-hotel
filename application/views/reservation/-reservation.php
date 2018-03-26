@@ -28,7 +28,7 @@
               <label class="c-input c-checkbox" ng-init="reservation.room_available = 'true'">
                 <input name="room_id[]" type="checkbox" value="{{room.room_id}}" ng-click="addRoom($event, room.room_number)">
                 <span class="c-indicator"></span>
-                {{room.room_number}}
+                {{room.nama_kamar}}
               </label>
             </div>
           </div>

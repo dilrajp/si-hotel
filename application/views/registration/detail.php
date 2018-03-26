@@ -307,7 +307,7 @@ echo $data['asd']->asd;*/
               </tr>
             </table>
             <hr>
-            <h3 class="text-xs-right"><span ng-bind="getTotal() | rupiah"></span></h3>
+            <!-- <h3 class="text-xs-right"><span ng-bind="getTotal() | rupiah"></span></h3> -->
           </div>
         </div>
 
@@ -587,18 +587,15 @@ echo $data['asd']->asd;*/
                     <select  name="data_kamar" class="form-control" required>
                       <option ng-repeat="each in jml_kamar" value="{{each.room_id}}|{{each.category_id}}"> <span>{{each.nama_kamar}}</option>   
                     </select>
-                   
                   </td>
                 </tr>
                 <tr ng-repeat="each in detail.detail|limitTo : 1">
                   <input type="hidden" name="grup" value="{{detail.guest_type}}">
                 </tr>
                 <tr>
-                <td style="vertical-align: middle;">Tanggal
-                 
-               </td>
+                  <td style="vertical-align: middle;">Tanggal</td>
                 <td>
-                  <input type="text" id="tanggal" name="registration_date" class="form-control input-append date form_datetime" data-date-format="yyyy-mm-dd 00:01:00" name="tanggal" required readonly>
+                  <input type="text" id="tanggal" name="registration_date" class="form-control input-append date form_datetime" data-date-format="yyyy-mm-dd 00:00:00" name="tanggal" required readonly>
                 </td>
                 </tr>
                 <tr>

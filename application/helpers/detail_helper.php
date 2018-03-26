@@ -42,7 +42,12 @@
           );
           break;
         case "room-number":
-          $result = get_instance()->db->get_where("room", array("room_id" => $identifier))->row();
+          // $result = get_instance()->db->get_where("room", array("room_id" => $identifier))->row();
+
+          $query = "SELECT `room_id`, `room_number`, `room_floor`, `room_wing`, `room_bedtype`, `room_adult`, `room_children`, `room_description`, `room_date`, `room_pict`, `category_id`, CONCAT(room_floor, IF(SUBSTR(`room_number`,1,3) = 'SUI', SUBSTR(`room_number`, 5, 2),  SUBSTR(`room_number`, 9, 2))) as `nama_kamar`
+                      FROM `room` WHERE `room_id` = '".$identifier."'";
+
+          $result = get_instance()->db->query($query)->row();
           break;
         case "total-room-status":
           $category_id = get_instance()->db->escape($_POST["category_id"]);

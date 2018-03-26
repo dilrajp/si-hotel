@@ -16,7 +16,7 @@
           if ($_POST["type"] != "all") get_instance()->db->where("category_id", $_POST["type"]);
 
           $query = "SELECT `reservation_id`, `guest_firstname`,  `marker_status`, `marker_modified` FROM `marker` JOIN `reservation` USING(`reservation_id`) JOIN `guest` USING(`reservation_id`)";
-          foreach (get_instance()->db->select("`room_id`,`room_floor`, CONCAT(room_floor, iF(SUBSTR(room_number,1,3) = 'SUI', SUBSTR(room_number, 5, 2),  SUBSTR(room_number, 9, 2) )) as nama_kamar, `room_number`")->order_by("nama_kamar", "asc")->get("room")->result() as $each) {
+          foreach (get_instance()->db->select("`room_id`,`room_floor`, CONCAT(room_floor, IF(SUBSTR(room_number,1,3) = 'SUI', SUBSTR(room_number, 5, 2),  SUBSTR(room_number, 9, 2) )) as nama_kamar, `room_number`")->order_by("nama_kamar", "asc")->get("room")->result() as $each) {
             $date = new DateTime(date_format(date_create_from_format("d M Y", $_POST["date"]), "Y-m-d"));
 
             $condition = " WHERE `room_id`='{$each->room_id}' AND `marker_status` <> 'VC'";
@@ -196,7 +196,7 @@
 
           $result = array();
           foreach ($categories as $each) {
-            $query = "SELECT `category_name`, `room_id`, `room_number`
+            $query = "SELECT `category_name`, `room_id`, `room_number`, CONCAT(room_floor, IF(SUBSTR(`room_number`,1,3) = 'SUI', SUBSTR(`room_number`, 5, 2),  SUBSTR(`room_number`, 9, 2))) as `nama_kamar`
                       FROM `room`
                       JOIN `category` USING(`category_id`)
                       WHERE `room_id` NOT IN (SELECT `room_id` FROM `marker` WHERE (`marker_date` >= {$date_in} AND `marker_date` <= {$date_out}) AND (`marker_status`='OD' OR `marker_status`='EA') GROUP BY `room_id`)
