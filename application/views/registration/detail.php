@@ -428,8 +428,31 @@ echo $data['asd']->asd;*/
                 </div>
 
                 </form>
+
+              </div>
+              <div ng-else ">
+              <form class="reloadform" action="{{checkout_url}}" method="post">
+                <div class="form-group row">
+                  <input type="hidden" name="reservation_id" value="{{detail.reservation_id}}"/>
+
+                  <div class="col-md-12">
+                    <strong>Start check-out for this reservation?</strong>
+                  </div>
+                </div>
+
+                <hr/>
+
+                <div class="form-group">
+                  <input type="submit" class="btn btn-sm btn-primary" value="Yes"/>
+                  <input type="button" class="btn btn-sm btn-warning" value="No" data-dismiss="modal"/>
+                </div>
+               </form>
+             </div> 
+        </div>
+
               </div>    
           </div>
+
         </div>
       </div>
     </div>
