@@ -70,7 +70,7 @@
                         <td align="{{hasBalance(each.deposit, each.billing) ? 'right' : 'center'}}">
                           <label ng-if="(each.deposit - each.billing) > 0" class="label label-primary" ng-bind="(each.deposit - each.billing) | rupiah"></label>
                           <span ng-if="(each.deposit - each.billing) < 0" class="text-nowrap" ng-bind="(each.deposit - each.billing) | rupiah"></span>
-                          <label ng-if="!((each.deposit - each.billing) > 0 || (each.deposit - each.billing) < 0)" class="label label-primary" ng-bind="0"></label>
+                          <label ng-if="!((each.deposit - each.billing) >  0 || (each.deposit - each.billing) < 0)" class="label label-primary" ng-bind="0"></label>
 
                         </td>
                         <td align="center">

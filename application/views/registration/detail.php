@@ -360,7 +360,8 @@
           Check-out for Reservation<br/> <strong>'{{detail.reservation_id}}'</strong><br/>
         </div>
         <div class="modal-body">
-        <div class="case">
+        <!-- <div class="case"> -->
+
               <div ng-if="detail.totalbalance < 0">
                 <!-- Bill: <strong>'{{detail.totalbalance}}'</strong> -->
                 <form action="<?php echo base_url('Api/checkout_bayar'); ?>" method="post">
@@ -388,6 +389,13 @@
                          <input type="number" name="deposit_amount" class="form-control"  id="firstname" />
                       </td>
                     </tr>
+
+                    <tr>
+                      <td style="vertical-align: middle;">Tanggal</td>
+                      <td>
+                        <input type="text" name="tanggal" class="form-control input-append date form_datetime checkout_date" ng-init="initializeDatepicker()" data-date-format="dd MM yyyy hh:ii:00" required readonly>
+                      </td>
+                    </tr>
                   </table>
                   <div class="form-group">
                     <input type="submit" class="btn btn-sm btn-primary" value="Add "/>
@@ -407,6 +415,12 @@
                          <input type="text" name="registration_amount" class="form-control"  value="{{detail.totalbalance}}" readonly="" />
                       </td>
                     </tr>
+                     <tr>
+                      <td style="vertical-align: middle;">Tanggal</td>
+                      <td>
+                        <input type="text" name="tanggal" class="form-control input-append date form_datetime checkout_date" ng-init="initializeDatepicker()" data-date-format="dd MM yyyy hh:ii:00" required readonly>
+                      </td>
+                    </tr>
                   </table>
                   <div class="form-group">
                     <input type="submit" class="btn btn-sm btn-primary" value="Add "/>
@@ -423,6 +437,9 @@
                     <div class="col-md-12">
                       <strong>Start check-out for this reservation?</strong>
                     </div>
+                     <div class="col-md-12">
+                   
+                  </div>
                   </div>
 
                   <hr/>
@@ -434,7 +451,7 @@
                 </form>
              </div>
                 
-          </div>
+          <!-- </div> -->
         </div>
       </div>
     </div>
@@ -444,7 +461,7 @@
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header text-lg-center" style="background: rgb(100, 176, 242); color:white;">
-          Add deposit for Reservation<br/> <strong>'{{detail.reservation_id}}'</strong><br/>
+          Add Deposit for Reservation<br/> <strong>'{{detail.reservation_id}}'</strong><br/>
         </div>
         <div class="modal-body">
           <form class="reloadform" action="{{deposit_url}}" method="post">
@@ -462,6 +479,13 @@
                 <td style="vertical-align: middle;">Amount</td>
                 <td><input type="number" name="deposit_amount" class="form-control" placeholder="Deposit Amount" value="0" required/></td>
               </tr>
+              <tr>
+                <td style="vertical-align: middle;">Tanggal</td>
+                <td>
+                  <input type="text" name="tanggal" class="form-control input-append date form_datetime deposit_date" data-date-format="dd MM yyyy hh:ii:00" required readonly>
+                </td>
+              </tr>
+
             </table>
 
             <hr/>
@@ -497,6 +521,12 @@
               <tr>
                 <td style="vertical-align: middle;">Amount</td>
                 <td><input type="number" name="deposit_amount" class="form-control" placeholder="Deposit Amount" value="0" required/></td>
+              </tr>
+              <tr>
+                <td style="vertical-align: middle;">Tanggal</td>
+                <td>
+                  <input type="text" name="tanggal" class="form-control input-append date form_datetime deposit_date" data-date-format="dd MM yyyy hh:ii:00" required readonly>
+                </td>
               </tr>
             </table>
 
@@ -557,6 +587,7 @@
                   <input type="text" id="datetimepicker" name="registration_date" class="form-control input-append date form_datetime" data-date-format="dd MM yyyy hh:ii:00" required readonly>
                 </td>
               </tr>
+
             </table>
 
             <hr/>
@@ -600,7 +631,7 @@
                 <tr>
                   <td style="vertical-align: middle;">Tanggal</td>
                 <td>
-                  <input type="text" id="tanggal" name="registration_date" class="form-control input-append date form_datetime" data-date-format="yyyy-mm-dd 00:00:00" name="tanggal" required readonly>
+                  <input type="text" id="tanggal" name="registration_date" class="form-control input-append date form_datetime" data-date-format="yyyy-mm-dd 23:59:59" name="tanggal" required readonly>
                 </td>
                 </tr>
                 <tr>
@@ -632,6 +663,26 @@
 
     
     $('#datetimepicker').datetimepicker({
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 0,
+        forceParse: 0
+    });
+
+    $('.deposit_date').datetimepicker({
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 0,
+        forceParse: 0
+    });
+
+    $('.checkout_date').datetimepicker({
         weekStart: 1,
         todayBtn:  1,
         autoclose: 1,
