@@ -280,7 +280,7 @@
           </div>
 
           <!--Lower Right-->
-          <div class="col-md-3 col-sm-6 col-xs-6 col-md-offset-3">
+          <!-- <div class="col-md-3 col-sm-6 col-xs-6 col-md-offset-3">
             <table width="100%">
               <tr>
                 <td align="right"><strong>Discount</strong></td>
@@ -294,8 +294,8 @@
               </tr>
             </table>
             <hr>
-            <!-- <h3 class="text-xs-right"><span ng-bind="getTotal() | rupiah"></span></h3> -->
-          </div>
+            <h3 class="text-xs-right"><span ng-bind="getTotal() | rupiah"></span></h3>
+          </div> -->
         </div>
 
         <hr>
@@ -385,7 +385,7 @@
                     <tr>
                       <td style="vertical-align: middle;">Amount </td>
                       <td align="right">
-                         <input type="text" name="deposit_amount" class="form-control"  id="firstname" />
+                         <input type="number" name="deposit_amount" class="form-control"  id="firstname" />
                       </td>
                     </tr>
                   </table>
