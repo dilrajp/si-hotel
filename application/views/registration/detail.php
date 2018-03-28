@@ -24,7 +24,7 @@
     var totalheignt = $('#kontenbilling').height() + $('#logo').height() + $('#biodata').height();
     var sisa = totalheignt % 842;
     $('#kontenpayment').removeClass('hidden-print');
-    $('#kontenpayment').css('margin-top', sisa + 150);
+    $('#kontenpayment').css('margin-top', sisa);
     $('#kontenbilling').addClass('hidden-print');
     $('#logo').addClass('hidden-print');
     $('#biodata').addClass('hidden-print');
