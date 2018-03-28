@@ -190,17 +190,17 @@
               <tr>
                 <td><strong>Deposit</strong></td>
                 <td align="center">:</td>
-                <td align="right"><label class="label label-success" ng-bind="detail.deposit | rupiah"></label></td>
+                <td align="right"><label class="label label-success" ng-if="detail.totaldeposit != 0" ng-bind="detail.totaldeposit | rupiah"></label><label class="label label-success" ng-if="detail.totaldeposit == 0">0</label></td>
               </tr>
               <tr>
                 <td><strong>Billing</strong></td>
                 <td align="center">:</td>
-                <td align="right"><label class="label label-warning" ng-bind="detail.totalbilling | rupiah"></label></td>
+                <td align="right"><label class="label label-warning" ng-if="detail.totalbilling != 0" ng-bind="detail.totalbilling | rupiah"></label><label class="label label-warning" ng-if="detail.totalbilling == 0">0</label></td>
               </tr>
               <tr>
                 <td><strong>Balance</strong></td>
                 <td align="center">:</td>
-                <td align="right"><label class="label label-primary" ng-bind="detail.totalbalance | rupiah"></label></td>
+                <td align="right"><label class="label label-primary" ng-if="detail.totalbalance != 0" ng-bind="detail.totalbalance | rupiah"></label><label class="label label-primary" ng-if="detail.totalbalance == 0">0</label></td>
               </tr>
             </table>
             <hr/>

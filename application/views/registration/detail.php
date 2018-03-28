@@ -4,18 +4,21 @@
   </div>
 </div>
 <script type="text/javascript">
-   function getval(sel)
-      {
-          
-            if (sel.value == "CC") {
+   function getval(sel){
+    if (sel.value == "CC") {
       $('#firstname').val(Math.abs($('#balancez').val()));
       $('#firstname').attr('readonly', true);
-        }else if(sel.value == "Cash"){
+      $('#textmanual').hide();
+    } else if(sel.value == "Cash"){
       $('#firstname').val(' ');
-      $('#firstname').attr('readonly', false);   
-         
-      }
-        }
+      $('#firstname').attr('readonly', false);
+      $('#textmanual').hide();
+    } else if(sel.value == "Company Account"){
+      $('#firstname').val(Math.abs($('#balancez').val()));
+      $('#firstname').attr('readonly', true);
+      $('#textmanual').show();
+    }
+  }
 </script>
 <style type="text/css">
   .editOption{
@@ -190,10 +193,10 @@
                     <td><span ng-bind="$index+1">{{each}}</span></td>
                     <td><span ng-bind="each.formatted_date.slice(0, each.formatted_date.length - 7)"></span></td>
                     <td><span ng-bind="each.formatted_date.substr(each.formatted_date.length - 6, 5)"></span></td>
-                    <td width="15%"><label class="label label-{{each.note === 'Added Deposit' || each.note.substr(0,11) === 'Correction-'  || each.note === 'Cash' || each.note === 'CC' ? 'success':'warning'}}" ng-bind="each.note.substr(0,11) === 'Correction-' ? each.note.substr(11) : each.note"></label></td>
-                    <td><span ng-if="each.note !== 'Added Deposit' && each.note.substr(0,11) !== 'Correction-' && each.note !== 'Cash' && each.note !== 'CC'" ng-bind="each.amount | rupiah"></td>
-                    <td><span ng-if="each.note === 'Added Deposit' || each.note.substr(0,11) === 'Correction-' || each.note === 'Cash' || each.note === 'CC'" ng-bind="each.amount | rupiah"></span></td>
-                    <td align="left"><span ng-bind="balance[$index] >= 0 ? '('+(balance[$index] | rupiah)+')' : (balance[$index]*(-1) | rupiah)"></span></td>
+                    <td width="15%"><label class="label label-{{each.note === 'Added Deposit' || each.note.substr(0,11) === 'Correction-'  || each.note === 'Cash' || each.note === 'CC' ||  each.note.substr(0,18) === 'Company Account - '? 'success':'warning'}}" ng-bind="each.note.substr(0,11) === 'Correction-' ? each.note.substr(11) : each.note"></label></td>
+                    <td><span ng-if="each.note !== 'Added Deposit' && each.note.substr(0,11) !== 'Correction-' && each.note !== 'Cash' && each.note !== 'CC' && each.note.substr(0,18) !== 'Company Account - '" ng-bind="each.amount | rupiah"></td>
+                    <td><span ng-if="each.note === 'Added Deposit' || each.note.substr(0,11) === 'Correction-' || each.note === 'Cash' || each.note === 'CC' || each.note.substr(0,18) === 'Company Account - '" ng-bind="each.amount | rupiah"></span></td>
+                    <td align="left"><span ng-if="balance[$index] != 0" ng-bind="balance[$index] >= 0 ? '('+(balance[$index] | rupiah)+')' : (balance[$index]*(-1) | rupiah)"></span><span ng-if="balance[$index] == 0">0</span></td>
                     </td>
                   </tr>
                 </tbody>
@@ -245,23 +248,21 @@
               <tr>
                 <td><strong>Deposit</strong></td>
                 <td align="center">:</td>
-                <td align="right"><label class="label label-success" ng-bind="detail.totaldeposit | rupiah"></label></td>
+                <td align="right"><label class="label label-success" ng-if="detail.totaldeposit != 0" ng-bind="detail.totaldeposit | rupiah"></label><label class="label label-success" ng-if="detail.totaldeposit == 0">0</label></td>
               </tr>
               <tr>
                 <td><strong>Billing</strong></td>
                 <td align="center">:</td>
-                <td align="right"><label class="label label-warning" ng-bind="detail.totalbilling | rupiah"></label></td>
+                <td align="right"><label class="label label-warning" ng-if="detail.totalbilling != 0" ng-bind="detail.totalbilling | rupiah"></label><label class="label label-warning" ng-if="detail.totalbilling == 0">0</label></td>
               </tr>
               <tr>
                 <td><strong>Balance</strong></td>
                 <td align="center">:</td>
-                <td align="right"><label class="label label-primary" ng-bind="detail.totalbalance | rupiah"></label></td>
+                <td align="right"><label class="label label-primary" ng-if="detail.totalbalance != 0" ng-bind="detail.totalbalance | rupiah"></label><label class="label label-primary" ng-if="detail.totalbalance == 0">0</label></td>
               </tr>
-              <tr>
-                <td colspan="3">
-                  <hr/>
-                </td>
-              </tr>
+            </table>
+            <hr/>
+            <table>
               <tr>
                 <td><strong>Special Request</strong></td>
                 <td align="center">:</td>
@@ -354,7 +355,7 @@
   </div>
 
     <div id="modal" class="modal fade" role="dialog" style="display: none;">
-    <div class="modal-dialog modal-sm">
+    <div class="modal-dialog modal-md">
       <div class="modal-content">
         <div class="modal-header text-lg-center" style="background: rgb(100, 176, 242); color:white;">
           Check-out for Reservation<br/> <strong>'{{detail.reservation_id}}'</strong><br/>
@@ -378,18 +379,23 @@
                       <td>
                         <select  name="deposit_name" class="form-control" onchange="getval(this);" required>
                           <option value="Cash" >Cash</option>     
-                          <option value="CC">CC </option>     
+                          <option value="CC">CC </option>
+                          <option value="Company Account">Company Account</option>     
                         </select>
                       </td>
                     </tr>
-                
+                    <tr id="textmanual">
+                      <td style="vertical-align: middle;">Company Name</td>
+                      <td align="right">
+                         <input type="text" name="company_account" class="form-control"  id="company_account" />
+                      </td>
+                    </tr>
                     <tr>
                       <td style="vertical-align: middle;">Amount </td>
                       <td align="right">
-                         <input type="number" name="deposit_amount" class="form-control"  id="firstname" />
+                         <input type="number" name="deposit_amount" class="form-control"  id="firstname" required/>
                       </td>
                     </tr>
-
                     <tr>
                       <td style="vertical-align: middle;">Tanggal</td>
                       <td>
@@ -660,6 +666,8 @@
 
 <script type="text/javascript">
   $(document).ready(function(){
+
+    $('#textmanual').hide();
 
     
     $('#datetimepicker').datetimepicker({

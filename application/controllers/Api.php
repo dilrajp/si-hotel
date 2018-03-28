@@ -140,40 +140,53 @@
     }
 
    public function checkout_bayar(){
-      $data = array(
+      if($this->input->post('deposit_name') == 'Company Account'){
+        $data = array(
            "deposit_id"     => uuid(),
            "deposit_amount" => abs($this->input->post('deposit_amount')),
-           "deposit_date"   => date('Y-m-d H:i:s', strtotime($_POST["tanggal"])),
+           "deposit_date"   => date('Y-m-d H:i:00', strtotime($_POST["tanggal"])),
+           "reservation_id" => $this->input->post('reservation_id'),
+           "deposit_name"   => $this->input->post('deposit_name').' - '.$this->input->post('company_account'),
+           );
+        $this->db->insert('deposit',$data);
+      } else {
+        $data = array(
+           "deposit_id"     => uuid(),
+           "deposit_amount" => abs($this->input->post('deposit_amount')),
+           "deposit_date"   => date('Y-m-d H:i:00', strtotime($_POST["tanggal"])),
            "reservation_id" => $this->input->post('reservation_id'),
            "deposit_name"   => $this->input->post('deposit_name')
            );
-      $this->db->insert('deposit',$data);
+        $this->db->insert('deposit',$data);
 
-      $selisih = abs($this->input->post('deposit_amount')) - abs($this->input->post('deposit_amount2'));
-      if($selisih > 0){
-         $data2 = array(
-           "registration_id"     => uuid(),
-           "registration_note"   => 'Change',
-           "registration_amount" => $selisih,
-           "registration_date"   => date('Y-m-d H:i:s', strtotime($_POST["tanggal"])),
-           "reservation_id"      => $_POST["reservation_id"],
-          );
-      $this->db->insert('registration',$data2);
-      }
-       $this->db->where('reservation_id',$_POST['reservation_id']);
-       $this->db->update("reservation", array("reservation_status" => "Finished"));
-
-        $marker = $this->db->order_by("marker_date", "asc")->get_where("marker",  array("reservation_id" => $this->input->post('reservation_id')))->result();
-        $size = sizeof($marker);
-        $i = 0;
-
-        foreach ($marker as $each) {
-          $status = $i == $size - 1 ? "VD" : "VC";
-          $this->db->update("marker", array("marker_status" => $status), array("marker_id" => $each->marker_id));
-          $i++;
+        $selisih = abs($this->input->post('deposit_amount')) - abs($this->input->post('deposit_amount2'));
+        if($selisih > 0){
+           $data2 = array(
+             "registration_id"     => uuid(),
+             "registration_note"   => 'Change',
+             "registration_amount" => $selisih,
+             "registration_date"   => date('Y-m-d H:i:01', strtotime($_POST["tanggal"])),
+             "reservation_id"      => $_POST["reservation_id"],
+            );
+          $this->db->insert('registration',$data2);
         }
+      }
+
+      $this->db->where('reservation_id', $_POST['reservation_id']);
+      $this->db->update("reservation", array("reservation_status" => "Finished"));
+
+      $marker = $this->db->order_by("marker_date", "asc")->get_where("marker",  array("reservation_id" => $this->input->post('reservation_id')))->result();
+      $size = sizeof($marker);
+      $i = 0;
+
+      foreach ($marker as $each) {
+        $status = $i == $size - 1 ? "VD" : "VC";
+        $this->db->update("marker", array("marker_status" => $status), array("marker_id" => $each->marker_id));
+        $i++;
+      }
 
       redirect('page/detail/registration/'.$this->input->post('reservation_id'));
+      
    }
 
    function checkout_dibayar(){

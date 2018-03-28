@@ -117,7 +117,7 @@
           $billing = 0;
 
           foreach ($result->deposit_list as $value) {
-            if ($value->note == 'Added Deposit' || substr($value->note,0,11) == 'Correction-' || $value->note == 'Cash' || $value->note == 'CC' )  {
+            if ($value->note == 'Added Deposit' || substr($value->note,0,11) == 'Correction-' || $value->note == 'Cash' || $value->note == 'CC' || substr($value->note,0,18) == 'Company Account - ')  {
               $total = $total + $value->amount;
               $deposit = $deposit + $value->amount;
             } else {
