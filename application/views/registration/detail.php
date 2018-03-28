@@ -19,6 +19,19 @@
       $('#textmanual').show();
     }
   }
+
+  function cetak() {
+    var totalheignt = $('#kontenbilling').height() + $('#logo').height() + $('#biodata').height();
+    var sisa = totalheignt % 842;
+    $('#kontenpayment').removeClass('hidden-print');
+    $('#kontenpayment').css('margin-top', sisa + 150);
+    $('#kontenbilling').addClass('hidden-print');
+    $('#logo').addClass('hidden-print');
+    $('#biodata').addClass('hidden-print');
+    console.log(sisa);
+    window.print();
+    location.reload();
+  }
 </script>
 <style type="text/css">
   .editOption{
@@ -39,7 +52,7 @@
       <div class="panel-body">
 
         <!--Header-->
-        <div class="clearfix">
+        <div class="clearfix" id="logo">
           <div class="pull-left">
             <h2 class="logo" style="color: #2b3d51 !important;">Hotel Admin</h2>
           </div>
@@ -52,7 +65,7 @@
         <hr>
 
         <!--Base Info-->
-        <div class="row">
+        <div class="row" id="biodata">
           <div class="col-md-6 col-sm-6 col-xs-6m-t-30">
             <table>
               <tr>
@@ -172,7 +185,7 @@
         </div>
 
         <!--Table-->
-        <div class="row">
+        <div class="row" id="kontenbilling">
 
           <div class="col-xs-12">
             <div class="table-responsive">
@@ -238,7 +251,7 @@
 
         <!--Lower Left-->
         <div class="row">
-          <div class="col-md-6 col-sm-6 col-xs-6">
+          <div class="col-md-6 col-sm-6 col-xs-6 hidden-print" id="kontenpayment">
             <table>
               <tr>
                 <td><strong>Method</strong></td>
@@ -306,7 +319,8 @@
               <td align="left" width="30%"></td>
               <td align="center" width="40%">
                 <!--Print-->
-                <a href="javascript:window.print()" class="btn btn-dark waves-effect waves-light"><i class="fa fa-print"></i></a>
+                <a ng-if="detail.reservation_status !== 'Finished'" href="javascript:window.print()" class="btn btn-dark waves-effect waves-light"><i class="fa fa-print"></i></a>
+                <button ng-if="detail.reservation_status === 'Finished'" onclick="cetak()" class="btn btn-dark waves-effect waves-light"><i class="fa fa-print"></i></button>
                 <!--Add Deposit-->
                 <a ng-if="detail.reservation_status === 'Ongoing'" href="" class="btn btn-success" ng-click="addDeposit(detail.reservation_id);" onclick="return false;"><i class="fa fa-plus"></i> Credit</a>
                 <!--Add Transaction-->
